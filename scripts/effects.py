@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Dezesseis efeitos locais para vídeos educativos. #Tecnologia #Saude"""
+"""45 efeitos locais para vídeos educativos. #Tecnologia #Saude"""
 from __future__ import annotations
 
 import argparse
@@ -16,24 +16,10 @@ import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
-EFFECTS = {
-    'focus': 'Foco no rosto: aproximação suave e cantos de enquadramento.',
-    'spotlight': 'Luz no apresentador com escurecimento suave ao redor.',
-    'grade': 'Cor cinematográfica: contraste suave e sombras frias.',
-    'checklist': 'Lista de até três pontos que são marcados em sequência.',
-    'split': 'Cartão de título que abre espaço acima do apresentador.',
-    'headline': 'Frase em caixa branca com entrada animada.',
-    'lean-in': 'Aproximação rápida e suave para enfatizar uma fala.',
-    'lineup': 'Três cartões numerados aparecem em sequência.',
-    'receipt': 'Uma nota em papel se desenrola com até três linhas.',
-    'comment': 'Uma pergunta é digitada em um cartão de comentário.',
-    'countdown': 'Contagem regressiva de 3 a 1 acima do rosto.',
-    'cover': 'Masthead e subtítulo em estilo de capa editorial.',
-    'glass': 'Cartão translúcido com título e complemento.',
-    'stamp': 'Carimbo colorido entra com uma pequena rotação.',
-    'timeline': 'Linha de edição com playhead e progresso do trecho.',
-    'dot-reveal': 'O quadro surge como pontos e volta à imagem nítida.',
-}
+from catalog import CATALOG, EFFECTS, ENGINE_NAMES, ALIASES, resolve_effect
+import full_effects
+from types import SimpleNamespace
+
 DEFAULTS = {
     'checklist': 'Observe|Anote suas dúvidas|Converse com seu médico',
     'split': 'Informação clara|para cuidar melhor',
@@ -48,6 +34,10 @@ DEFAULTS = {
 }
 LINE_LIMITS = {'checklist': 3, 'split': 3, 'headline': 2, 'lineup': 3,
                'receipt': 3, 'comment': 1, 'cover': 2, 'glass': 2, 'stamp': 1, 'timeline': 1}
+DEFAULTS = {resolve_effect(k):v for k,v in DEFAULTS.items()}
+DEFAULTS.update(full_effects.DEFAULTS)
+LINE_LIMITS = {resolve_effect(k):v for k,v in LINE_LIMITS.items()}
+LINE_LIMITS.update(full_effects.LIMITS)
 EXTRA_EFFECTS = {'lean-in', 'lineup', 'receipt', 'comment', 'countdown',
                  'cover', 'glass', 'stamp', 'timeline', 'dot-reveal'}
 FONT_PATH = None
@@ -170,7 +160,7 @@ def panel_layout(face, w, h, desired):
 def render_extra(frame, face, e, t, fade):
     """Ten visual treatments sharing the same geometry and text helpers."""
     h, w = frame.shape[:2]
-    kind = e['effect']; local = t - e['start']; duration = e['end'] - e['start']
+    kind = ENGINE_NAMES.get(e['effect'],e['effect']); local = t - e['start']; duration = e['end'] - e['start']
     if kind == 'lean-in':
         if face is None:
             return frame, face
@@ -325,7 +315,10 @@ def render_effect(frame, face, e, t):
     h, w = frame.shape[:2]
     local, duration = t - e['start'], e['end'] - e['start']
     fade = min(ease(local / .26), max(0., min(1., (e['end'] - t) / .24)))
-    kind = e['effect']
+    kind = ENGINE_NAMES.get(e['effect'],e['effect'])
+    if e['effect'] in full_effects.FULL_NAMES:
+        api=SimpleNamespace(font=font,fit=fit,text_center=text_center,panel_layout=panel_layout,zoom=zoom)
+        return full_effects.render_full(frame,face,e,t,api)
     if kind in EXTRA_EFFECTS:
         return render_extra(frame, face, e, t, fade)
     if kind == 'grade':
@@ -420,26 +413,31 @@ def render_effect(frame, face, e, t):
 
 
 def validate_plan(items, duration):
-    if not isinstance(items, list) or not items:
+    if not isinstance(items,list) or not items:
         raise ValueError('O plano precisa de uma lista não vazia em effects.')
-    clean = []
+    clean=[]
     for raw in items:
-        if not isinstance(raw, dict) or raw.get('effect') not in EFFECTS:
-            raise ValueError(f'Efeito inválido. Escolha: {", ".join(EFFECTS)}')
-        start = float(raw.get('start', 0)); end = min(float(raw.get('end', duration)), duration)
-        if not math.isfinite(start) or not math.isfinite(end) or start < 0 or end <= start:
+        if not isinstance(raw,dict):
+            raise ValueError('Cada efeito deve ser um objeto.')
+        name=resolve_effect(raw.get('effect',''))
+        start=float(raw.get('start',0));end=min(float(raw.get('end',duration)),duration)
+        if not math.isfinite(start) or not math.isfinite(end) or start<0 or end<=start:
             raise ValueError(f'Intervalo inválido: {start}–{end}.')
-        text = str(raw.get('text', DEFAULTS.get(raw['effect'], '')))
-        if raw['effect'] in DEFAULTS:
-            lines = text.split('|')
-            limit = LINE_LIMITS[raw['effect']]
-            max_chars = 32 if raw['effect'] == 'stamp' else 180
-            if len(lines) > limit or any(not line.strip() for line in lines) or len(text) > max_chars:
-                raise ValueError(f'Texto inválido para {raw["effect"]}: até {limit} linhas/itens e {max_chars} caracteres.')
-        item = dict(effect=raw['effect'], start=start, end=end, text=text)
-        # Spatial effects have different coordinate systems. Prevent accidental stacks.
+        text=str(raw.get('text',DEFAULTS.get(name,'')))
+        if name in DEFAULTS:
+            lines=text.split('|');limit=LINE_LIMITS[name];max_chars=32 if name=='reject-stamp' else 180
+            if len(lines)>limit or any(not line.strip() for line in lines) or len(text)>max_chars:
+                raise ValueError(f'Texto inválido para {name}: até {limit} linhas/itens e {max_chars} caracteres.')
+        item=dict(effect=name,start=start,end=end,text=text)
+        if raw.get('images'):
+            if not isinstance(raw['images'],str):
+                raise ValueError('images deve ser um caminho local.')
+            folder=Path(raw['images']).expanduser().resolve()
+            if not folder.exists():
+                raise ValueError(f'Pasta de imagens não encontrada: {folder}')
+            item['images']=str(folder)
         for other in clean:
-            if start < other['end'] and end > other['start']:
+            if start<other['end'] and end>other['start']:
                 raise ValueError('Efeitos sobrepostos não são suportados; use intervalos separados.')
         clean.append(item)
     return clean
@@ -467,6 +465,8 @@ def run_video(args):
         items = [dict(effect=args.effect, start=args.start, end=args.end if args.end is not None else duration)]
         if args.text is not None:
             items[0]['text'] = args.text
+        if args.images:
+            items[0]['images'] = args.images
     plan = validate_plan(items, duration)
     if args.mode == 'preview' and not 0 <= args.at < duration:
         raise ValueError('--at precisa estar dentro da duração do vídeo.')
@@ -498,6 +498,9 @@ def run_video(args):
             t = frames / 30
             active = [e for e in plan if e['start'] <= t < e['end']]
             face = tracker.update(frame) if active else None
+            for e in active:
+                if e['effect']=='pause-point' and '_frozen' not in e:
+                    e['_frozen']=(frame.copy(),None if face is None else face.copy())
             if args.mode == 'preview' and frames != target:
                 frames += 1
                 continue
@@ -540,15 +543,15 @@ def run_video(args):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='mode', required=True)
-    sub.add_parser('list', help='Lista os dezesseis efeitos')
+    sub.add_parser('list', help='Lista os 45 efeitos')
     sub.add_parser('doctor', help='Confere dependências locais')
     for mode in ('render', 'preview'):
         s = sub.add_parser(mode)
         s.add_argument('input'); s.add_argument('output')
         choice = s.add_mutually_exclusive_group(required=True)
-        choice.add_argument('--effect', choices=EFFECTS); choice.add_argument('--plan')
+        choice.add_argument('--effect', type=resolve_effect, choices=EFFECTS); choice.add_argument('--plan')
         s.add_argument('--start', type=float, default=0); s.add_argument('--end', type=float)
-        s.add_argument('--text'); s.add_argument('--width', type=int, default=1080)
+        s.add_argument('--images',help='Pasta local de imagens para cartões e B-roll'); s.add_argument('--text'); s.add_argument('--width', type=int, default=1080)
         s.add_argument('--font', help='Caminho de uma fonte TTF/OTF local')
         if mode == 'preview':
             s.add_argument('--at', type=float, required=True)

@@ -1,35 +1,38 @@
 ---
 name: med-video-effects
 description: >-
-  Aplique 16 efeitos locais a vídeos educativos de médicos, incluindo títulos, checklist,
-  foco, luz, cartões, comentário digitado, recibo, carimbo e revelação por pontos. Use com vídeos próprios
-  e texto fornecido pelo usuário; não transcreve nem produz orientação clínica.
+  Edite vídeos educativos de médicos com 45 efeitos locais: títulos, órbita, foco,
+  checklist, cartões, vidro, gráficos ilustrativos, notificações e transições.
+  Use quando o usuário pedir um efeito pelo nome ou uma edição visual de vídeo próprio.
 ---
 
 # Med Video Effects
 
 #Saude #Tecnologia
 
-Os scripts são relativos à pasta deste `SKILL.md`; use caminhos absolutos ao executá-los a partir de outro diretório.
+Os caminhos abaixo são relativos a este SKILL.md. Execute scripts por caminho absoluto quando estiver em outra pasta.
 
-## Preparar e escolher
+## Instalar e preparar
 
-- Se `.venv` ainda não existir, execute `python3 scripts/setup.py` nesta pasta. Ele instala dependências apenas no ambiente do clone. Se faltar FFmpeg, siga o erro de instalação; não altere configurações do assistente.
-- Python local: `.venv/bin/python` no macOS/Linux, `.venv\Scripts\python.exe` no Windows.
-- Consulte `scripts/effects.py list` e a tabela do `README.md` para escolher o efeito. Texto e sentido clínico vêm do usuário ou de uma transcrição que ele forneceu. O renderizador não escuta áudio nem localiza palavras faladas.
-- Use os caminhos do vídeo e da saída indicados pelo usuário. Na falta de timing, entradas de 2–4 s funcionam como rascunho. Preserve o original e escolha um nome novo para cada versão.
+O pedido para instalar este repositório inclui preparar os programas necessários, conforme as permissões do ambiente. Confira o sistema e a presença de Python 3.10+, Git, FFmpeg 6+ e ffprobe; reutilize o que já existir. Os comandos por sistema e os locais de instalação no Claude Code/Codex estão em [docs/AVANCADO.md](docs/AVANCADO.md). Se uma permissão do sistema impedir a instalação, informe exatamente o requisito restante.
 
-## Conferir e exportar
+Execute `python3 scripts/setup.py` na pasta do clone. Ele cria `.venv` e instala dependências isoladas. Python do projeto: `.venv/bin/python` no macOS/Linux; `.venv\Scripts\python.exe` no Windows. Confirme com `scripts/effects.py doctor`. Não altere configurações globais do assistente para instalar a skill.
 
-Uma entrada simples:
+## Interpretar o pedido
+
+O usuário pode pedir pelo nome em português, sem slash command. Consulte [docs/CATALOGO.md](docs/CATALOGO.md) ou execute `scripts/effects.py list`. O CLI aceita nomes técnicos, nomes em português e aliases antigos. Use `--effect "Título em caixa"` ou `--effect headline-box`.
+
+Use o vídeo, o texto, as imagens e o destino informados. Pergunte só o que faltar para executar. Sem timing, uma entrada inicial de 2–4 s pode servir como rascunho. O script não transcreve: não invente o segundo em que uma palavra foi dita. Textos clínicos vêm do usuário; gráficos de exemplo são ilustrações, sem validação clínica.
+
+## Conferir e renderizar
 
 ```sh
-.venv/bin/python scripts/effects.py preview "/caminho/video.mp4" "/caminho/previa.png" --effect headline --text "Leve suas dúvidas|para a consulta" --start 0 --end 4 --at 2
-.venv/bin/python scripts/effects.py render "/caminho/video.mp4" "/caminho/video_editado.mp4" --effect headline --text "Leve suas dúvidas|para a consulta" --start 0 --end 4
+.venv/bin/python scripts/effects.py preview "/caminho/video.mp4" "/caminho/previa.png" --effect "Título em caixa" --text "Leve suas dúvidas|para a consulta" --start 0 --end 4 --at 2
+.venv/bin/python scripts/effects.py render "/caminho/video.mp4" "/caminho/video_editado.mp4" --effect "Título em caixa" --text "Leve suas dúvidas|para a consulta" --start 0 --end 4
 ```
 
-Para várias entradas, escreva uma lista `effects` com `effect`, `start`, `end` e `text` opcional. Veja `examples/plan.json`. Use `--plan /caminho/plano.json` no lugar de `--effect`. Intervalos sobrepostos são rejeitados. `|` separa até três itens/linhas em checklist, split, lineup e receipt; duas linhas em headline, cover e glass. Comment recebe uma pergunta; stamp e timeline, uma linha. Consulte o README para limites e exemplos. O plano `examples/all-effects.json` demonstra os 16 efeitos em 32 s.
+Para várias entradas, escreva uma lista `effects` com `effect`, `start`, `end` e `text` opcional; use `--plan`. Veja `examples/plan.json` e `examples/all-effects.json` (45 efeitos em 90 s). Intervalos sobrepostos são rejeitados. Para cartões/B-roll, use `--images` ou `images` no plano com uma pasta local de JPG/PNG/WebP. Sem imagens, o efeito reutiliza um frame do vídeo.
 
-Inspecione prévias no meio de cada efeito, ajustando textos e enquadramento antes de renderizar. O detector é simples: se perder o rosto, foco, aproximação e spotlight são omitidos; títulos podem ser reduzidos ou omitidos quando falta espaço. Não afirme que houve recorte da pessoa ou tracking preciso sem verificar os quadros.
+Inspecione as prévias e ajuste texto/enquadramento antes de exportar. Preserve o original e escolha uma saída nova. O detector é básico; se não encontrar rosto ou espaço, alguns elementos são omitidos. Órbita e palavras usam espaço acima do rosto, sem recorte semântico. Não prometa camadas atrás da pessoa.
 
-A exportação usa H.264, 30 fps e largura de 1080 px; `--width 720` gera uma prévia mais leve. AAC é copiado; outros áudios são convertidos para AAC. Vídeo sem áudio continua sem áudio. HDR exige conversão prévia para SDR. Confira início/meio/fim, duração e decodificação antes de entregar. Publicar conteúdo ou enviar vídeos a serviços externos exige pedido separado; este renderizador trabalha localmente.
+AAC é copiado; outros áudios viram AAC. Pausa com seta mantém áudio e duração, congelando só a imagem. HDR precisa ser convertido para SDR. Confira decodificação, duração, início/meio/fim e o áudio antes de entregar. As opções, limites e soluções de problemas estão no guia avançado. Publicação e envio a serviços externos dependem de um pedido separado.

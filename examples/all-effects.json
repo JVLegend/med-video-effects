@@ -5,94 +5,265 @@
   ],
   "effects": [
     {
-      "effect": "focus",
+      "effect": "noise",
       "start": 0,
-      "end": 2
+      "end": 2,
+      "text": "Ideias|Perguntas|Explicações"
     },
     {
-      "effect": "spotlight",
+      "effect": "lineup",
       "start": 2,
-      "end": 4
+      "end": 4,
+      "text": "Observe|Pergunte|Converse"
     },
     {
-      "effect": "grade",
+      "effect": "locked-on",
       "start": 4,
       "end": 6
     },
     {
-      "effect": "checklist",
+      "effect": "orbit",
       "start": 6,
       "end": 8,
-      "text": "Observe|Anote suas dúvidas|Converse com seu médico"
-    },
-    {
-      "effect": "split",
-      "start": 8,
-      "end": 10,
-      "text": "Informação clara|para cuidar melhor"
-    },
-    {
-      "effect": "headline",
-      "start": 10,
-      "end": 12,
-      "text": "Saúde com informação"
+      "text": "Observe|Pergunte|Converse"
     },
     {
       "effect": "lean-in",
+      "start": 8,
+      "end": 10
+    },
+    {
+      "effect": "backdrop-word",
+      "start": 10,
+      "end": 12,
+      "text": "SAÚDE"
+    },
+    {
+      "effect": "spotlight",
       "start": 12,
       "end": 14
     },
     {
-      "effect": "lineup",
+      "effect": "the-bill",
       "start": 14,
       "end": 16,
-      "text": "Observe|Pergunte|Converse"
-    },
-    {
-      "effect": "receipt",
-      "start": 16,
-      "end": 18,
       "text": "Antes da consulta|Organize suas dúvidas|Leve suas anotações"
     },
     {
-      "effect": "comment",
+      "effect": "moody",
+      "start": 16,
+      "end": 18
+    },
+    {
+      "effect": "swipe",
       "start": 18,
-      "end": 20,
+      "end": 20
+    },
+    {
+      "effect": "todo",
+      "start": 20,
+      "end": 22,
+      "text": "Observe|Anote suas dúvidas|Converse com seu médico"
+    },
+    {
+      "effect": "comment-box",
+      "start": 22,
+      "end": 24,
       "text": "Qual assunto você quer entender melhor?"
     },
     {
-      "effect": "countdown",
-      "start": 20,
-      "end": 22
-    },
-    {
-      "effect": "cover",
-      "start": 22,
-      "end": 24,
-      "text": "SAÚDE|Informação para uma boa conversa"
-    },
-    {
-      "effect": "glass",
+      "effect": "tap",
       "start": 24,
       "end": 26,
-      "text": "Na próxima consulta|Leve suas dúvidas"
+      "text": "Seguir|Seguindo"
     },
     {
-      "effect": "stamp",
+      "effect": "pause-point",
       "start": 26,
       "end": 28,
+      "text": "Vale anotar"
+    },
+    {
+      "effect": "uninstall",
+      "start": 28,
+      "end": 30,
+      "text": "Reorganizando ideias"
+    },
+    {
+      "effect": "reel-frame",
+      "start": 30,
+      "end": 32,
+      "text": "Seu vídeo"
+    },
+    {
+      "effect": "shortcut-rain",
+      "start": 32,
+      "end": 34,
+      "text": "Ctrl|C|V|Enter|Tab"
+    },
+    {
+      "effect": "reject-stamp",
+      "start": 34,
+      "end": 36,
       "text": "ANOTE"
     },
     {
+      "effect": "countdown-flip",
+      "start": 36,
+      "end": 38
+    },
+    {
+      "effect": "rabbit-hole",
+      "start": 38,
+      "end": 40
+    },
+    {
+      "effect": "cover-star",
+      "start": 40,
+      "end": 42,
+      "text": "SAÚDE|Informação para uma boa conversa"
+    },
+    {
+      "effect": "scribble",
+      "start": 42,
+      "end": 44,
+      "text": "Anote"
+    },
+    {
+      "effect": "glass-widgets",
+      "start": 44,
+      "end": 46,
+      "text": "Próxima consulta|Leve suas dúvidas|Organize suas notas"
+    },
+    {
+      "effect": "red-collage",
+      "start": 46,
+      "end": 48,
+      "text": "SAÚDE|Informação clara|Uma ideia por vez"
+    },
+    {
+      "effect": "split-headline",
+      "start": 48,
+      "end": 50,
+      "text": "Informação clara|para cuidar melhor"
+    },
+    {
+      "effect": "pastel-word",
+      "start": 50,
+      "end": 52,
+      "text": "CUIDADO|Converse com seu médico"
+    },
+    {
+      "effect": "check-pills",
+      "start": 52,
+      "end": 54,
+      "text": "Observe|Pergunte|Converse"
+    },
+    {
       "effect": "timeline",
-      "start": 28,
-      "end": 30,
+      "start": 54,
+      "end": 56,
       "text": "Uma ideia de cada vez"
     },
     {
+      "effect": "headline-box",
+      "start": 56,
+      "end": 58,
+      "text": "Saúde com informação"
+    },
+    {
+      "effect": "profile-wall",
+      "start": 58,
+      "end": 60,
+      "text": "Seu conteúdo"
+    },
+    {
+      "effect": "tier-list",
+      "start": 60,
+      "end": 62,
+      "text": "Prioridades|Perguntar"
+    },
+    {
+      "effect": "broll-split",
+      "start": 62,
+      "end": 64,
+      "text": "Imagem de apoio"
+    },
+    {
+      "effect": "phone-fan",
+      "start": 64,
+      "end": 66,
+      "text": "Vídeos para explicar"
+    },
+    {
       "effect": "dot-reveal",
-      "start": 30,
-      "end": 32
+      "start": 66,
+      "end": 68
+    },
+    {
+      "effect": "headline-wall",
+      "start": 68,
+      "end": 70,
+      "text": "Observe|Pergunte|Converse"
+    },
+    {
+      "effect": "checklist",
+      "start": 70,
+      "end": 72,
+      "text": "Observe|Anote suas dúvidas|Converse com seu médico"
+    },
+    {
+      "effect": "liquid-glass-graph",
+      "start": 72,
+      "end": 74,
+      "text": "Gráfico ilustrativo"
+    },
+    {
+      "effect": "carousel-spin",
+      "start": 74,
+      "end": 76,
+      "text": "Observe|Pergunte|Converse"
+    },
+    {
+      "effect": "match-cut",
+      "start": 76,
+      "end": 78,
+      "text": "SAÚDE"
+    },
+    {
+      "effect": "apple-toggles",
+      "start": 78,
+      "end": 80,
+      "text": "Clareza|Organização|Boa conversa"
+    },
+    {
+      "effect": "led-sign",
+      "start": 80,
+      "end": 82,
+      "text": "Informação clara"
+    },
+    {
+      "effect": "slow-push",
+      "start": 82,
+      "end": 84
+    },
+    {
+      "effect": "over-the-shoulder-zoom",
+      "start": 84,
+      "end": 86,
+      "text": "Primeira ideia|Próxima ideia"
+    },
+    {
+      "effect": "messages",
+      "start": 86,
+      "end": 88,
+      "text": "Anote suas dúvidas|Leve suas perguntas|Converse na consulta"
+    },
+    {
+      "effect": "place-in-grid",
+      "start": 88,
+      "end": 90,
+      "text": "Seu conteúdo"
     }
   ]
 }
