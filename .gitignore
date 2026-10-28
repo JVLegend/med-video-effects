@@ -1,0 +1,15 @@
+# #Tecnologia #Saude
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+.env
+.env.*
+.medfx-*
+*.mp4
+*.mov
+*.m4v
+*.wav
+*.mp3
+*.aac
+outputs/

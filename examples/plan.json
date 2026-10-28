@@ -1,0 +1,11 @@
+{
+  "tags": ["#Saude", "#Tecnologia"],
+  "effects": [
+    {"effect": "headline", "start": 0, "end": 3, "text": "Informação clara|para cuidar melhor"},
+    {"effect": "focus", "start": 3, "end": 5},
+    {"effect": "spotlight", "start": 5, "end": 7},
+    {"effect": "checklist", "start": 7, "end": 11, "text": "Observe|Anote suas dúvidas|Converse com seu médico"},
+    {"effect": "split", "start": 11, "end": 14, "text": "Leve suas dúvidas|para a consulta"},
+    {"effect": "grade", "start": 14, "end": 18}
+  ]
+}
