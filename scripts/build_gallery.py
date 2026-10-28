@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exemplos do catálogo com um frame autorizado. #Saude #Tecnologia"""
+"""Exemplos do catálogo com a fotografia indicada pelo usuário. #Saude #Tecnologia"""
 from pathlib import Path
 import math
 import numpy as np

@@ -48,7 +48,7 @@ def editorial_frame():
     source=Image.open(ASSETS/'example-frame.jpg').convert('RGB')
     raw=np.asarray(source);face=effects.FaceTracker().update(raw)
     if face is None:raise RuntimeError('Rosto necessário para o reenquadramento editorial.')
-    zoom=1.38;cw=source.width/zoom;ch=source.height/zoom
+    zoom=1.0;cw=source.width/zoom;ch=source.height/zoom
     left=max(0,min(source.width-cw,face[0]-cw*.5))
     top=max(0,min(source.height-ch,face[1]-ch*.58))
     crop=source.crop((int(left),int(top),int(left+cw),int(top+ch))).resize(source.size,Image.Resampling.LANCZOS)

@@ -175,13 +175,13 @@ Para testar, prefira uma gravação sua sem pacientes ou informações identific
 
 A instalação isolada e os testes foram validados em macOS ARM, Python 3.14 e FFmpeg 8.1. As instruções de Linux e Windows ainda precisam de validação nesses sistemas.
 
-Os testes geram vídeos temporários para verificar exportação, preservação de áudio, proteção do original e erros de plano. As seis galerias e os 51 thumbnails são gerados pelo próprio renderizador usando o frame autorizado em `assets/`.
+Os testes geram vídeos temporários para verificar exportação, preservação de áudio, proteção do original e erros de plano. As seis galerias e os 51 thumbnails são gerados pelo próprio renderizador usando a imagem-base em `assets/`.
 
 Quer contribuir? Abra uma issue com o efeito desejado, uma descrição do movimento e um exemplo que você possa compartilhar. Melhorias de tracking, enquadramento e instalação são bem-vindas. Se abrir um PR visual, inclua antes/depois e como testou.
 
 ## Licença e imagens
 
-O código é distribuído sob a [licença MIT](../LICENSE). Dependências mantêm suas próprias licenças. As fotografias e os derivados do retrato em `assets/` são exemplos autorizados para este repositório e estão excluídos da licença do código; veja [as informações das imagens](../assets/README.md). Substitua pelo seu próprio material.
+O código é distribuído sob a [licença MIT](../LICENSE). Dependências mantêm suas próprias licenças. A fotografia indicada pelo usuário e seus derivados em `assets/` estão excluídos da licença do código; a autoria e a licença da fotografia de origem não foram informadas; veja [as informações das imagens](../assets/README.md). Substitua pelo seu próprio material.
 
 Criado por [João Victor · @JVLegend](https://github.com/JVLegend).
 
@@ -219,7 +219,7 @@ Scanner e Pulso são animações gráficas: não analisam imagens, sinais bioló
 
 ## Reproduzir a direção visual das thumbnails
 
-As prévias usam um frame autorizado reenquadrado (`assets/editorial-frame.jpg`), textos curtos e paletas editoriais. Os seis desenhos em `assets/demo-cards/` são capas ilustrativas fornecidas como imagens reais para os efeitos de cartões. Você pode substituí-los pelo seu material.
+As prévias usam a fotografia indicada pelo usuário, adaptada ao formato vertical (`assets/editorial-frame.jpg`), textos curtos e paletas editoriais. Os seis desenhos em `assets/demo-cards/` são capas ilustrativas fornecidas como imagens reais para os efeitos de cartões. Você pode substituí-los pelo seu material.
 
 A cor dos grafismos pode ser alterada com `--accent` ou `accent` no plano:
 

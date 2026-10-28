@@ -1,16 +1,18 @@
 # Imagens de demonstração
 
-#JoaoVictor #Tecnologia
+#Tecnologia #Saude
 
-O frame em `example-frame.jpg` (instante 0,10 s do vídeo autorizado, boca fechada e olhos abertos) e suas versões com efeitos mostram João Victor, que autorizou seu uso como exemplo neste repositório. Galeria, thumbnails e GIF foram produzidos com `scripts/build_gallery.py`; o GIF anima um único frame e não representa tracking em vídeo em movimento.
+A imagem-base atual foi indicada pelo usuário: [fotografia hospedada no Pinterest](https://i.pinimg.com/736x/1d/2d/b2/1d2db27d7fbd575445f8f6b81f3d64ba.jpg). O arquivo recebido está em `baseline-source.jpg`; autoria e licença da fotografia não foram informadas. Sua disponibilidade nesse endereço não equivale a uma licença de reutilização.
 
-A licença MIT do código não concede direitos de imagem sobre o retrato. Use seu próprio material para gerar novos exemplos. Não reutilize o rosto em anúncios ou como endosso.
+`example-frame.jpg` adapta a fotografia inteira para 720 × 1280, com uma extensão do fundo no topo para acomodar os títulos, sem cortar as mãos ou o rosto. `editorial-frame.jpg` deriva dessa composição com contraste discreto e fundo suavizado, mantendo o enquadramento completo. Nenhum novo rosto foi gerado. A fotografia anterior de João Victor foi substituída nos exemplos atuais.
+
+Galerias, 51 miniaturas e GIF foram produzidos com `scripts/build_gallery.py`. O GIF anima uma fotografia estática e não representa rastreamento em vídeo em movimento. As imagens são exemplos gráficos; não indicam vínculo, profissão, depoimento ou endosso da pessoa retratada.
+
+A licença MIT do código não concede direitos sobre a fotografia, a imagem pessoal ou marcas de terceiros. Para seus próprios vídeos e publicações, use material com autorização apropriada.
 
 A fonte não é distribuída: o renderizador procura uma fonte do sistema e recorre à fonte padrão do Pillow. Você pode fornecer uma fonte local com `--font`.
 
 ## Direção editorial das thumbnails
-
-As prévias atuais usam `editorial-frame.jpg`, derivado do mesmo frame autorizado com reenquadramento próximo, contraste discreto e fundo suavizado. A boca permanece fechada; nenhum novo rosto foi gerado.
 
 Os textos curtos, as cores de destaque e as imagens dos cartões são presets reais do renderizador. `scripts/gallery_art.py` cria seis capas ilustrativas em `demo-cards/`; elas não são publicações ou resultados clínicos reais. São artes gráficas próprias, sem retratos, licenciadas junto ao código. A galeria adiciona apenas o número e o nome de cada efeito ao rodapé das imagens.
 
