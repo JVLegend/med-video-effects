@@ -219,7 +219,7 @@ Scanner e Pulso são animações gráficas: não analisam imagens, sinais bioló
 
 ## Reproduzir a direção visual das thumbnails
 
-As prévias usam a fotografia indicada pelo usuário, adaptada ao formato vertical (`assets/editorial-frame.jpg`), textos curtos e paletas editoriais. Os seis desenhos em `assets/demo-cards/` são capas ilustrativas fornecidas como imagens reais para os efeitos de cartões. Você pode substituí-los pelo seu material.
+As prévias usam a fotografia indicada pelo usuário, adaptada ao formato vertical com área superior para títulos (`assets/editorial-frame.jpg`), textos curtos e paletas editoriais. Os seis desenhos em `assets/demo-cards/` são capas ilustrativas fornecidas como imagens reais para os efeitos de cartões. Você pode substituí-los pelo seu material.
 
 A cor dos grafismos pode ser alterada com `--accent` ou `accent` no plano:
 

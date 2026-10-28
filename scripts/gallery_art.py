@@ -45,26 +45,23 @@ COVERS=[('01-olhar','OLHAR','Informação clara.',(107,177,185),(12,33,41),'eye'
 
 
 def editorial_frame():
-    source=Image.open(ASSETS/'example-frame.jpg').convert('RGB')
-    raw=np.asarray(source);face=effects.FaceTracker().update(raw)
-    if face is None:raise RuntimeError('Rosto necessário para o reenquadramento editorial.')
-    zoom=1.0;cw=source.width/zoom;ch=source.height/zoom
-    left=max(0,min(source.width-cw,face[0]-cw*.5))
-    top=max(0,min(source.height-ch,face[1]-ch*.58))
-    crop=source.crop((int(left),int(top),int(left+cw),int(top+ch))).resize(source.size,Image.Resampling.LANCZOS)
-    crop=ImageEnhance.Color(crop).enhance(.94)
-    crop=ImageEnhance.Contrast(crop).enhance(1.06)
-    crop=ImageEnhance.Sharpness(crop).enhance(1.12)
-    arr=np.asarray(crop);f=effects.FaceTracker().update(arr)
-    if f is None:raise RuntimeError('O reenquadramento precisa manter o rosto visível.')
-    h,w=arr.shape[:2];yy,xx=np.ogrid[:h,:w];cx,cy,fw,fh=f
-    face_mask=np.clip(1.5-((xx-cx)/(fw*.78))**2-((yy-cy-fh*.20)/(fh*1.05))**2,0,1)
-    body=np.clip((yy-(cy+fh*.40))/(h*.18),0,1)
-    mask=np.maximum(face_mask,body)[...,None]
-    soft=cv2.GaussianBlur(arr,(0,0),4.5)
-    finished=np.uint8(np.clip(arr*mask+soft*(1-mask),0,255))
-    Image.fromarray(finished).save(ASSETS/'editorial-frame.jpg',quality=95)
-    return Image.fromarray(finished)
+    # Keep the entire supplied photograph; reserve a contrasting title area.
+    with Image.open(ASSETS/'baseline-source.jpg') as photo:
+        photo=photo.convert('RGB')
+        scale=min(720/photo.width,1000/photo.height)
+        photo=photo.resize((round(photo.width*scale),round(photo.height*scale)),Image.Resampling.LANCZOS)
+    w,h=720,1280
+    yy=np.arange(h,dtype=float)[:,None,None]
+    mix=np.clip((yy-160)/120,0,1)
+    dark=np.array([13,17,23],dtype=float)[None,None,:]
+    backdrop=np.uint8(np.broadcast_to(dark*(1-mix)+255*mix,(h,w,3)).copy())
+    result=Image.fromarray(backdrop)
+    result.paste(photo,((w-photo.width)//2,h-photo.height))
+    if effects.FaceTracker().update(np.asarray(result)) is None:
+        raise RuntimeError('A imagem-base precisa manter um rosto detectável.')
+    result.save(ASSETS/'example-frame.jpg',quality=96,subsampling=0)
+    result.save(ASSETS/'editorial-frame.jpg',quality=96,subsampling=0)
+    return result
 
 
 def demo_cards():

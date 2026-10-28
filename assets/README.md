@@ -2,9 +2,9 @@
 
 #Tecnologia #Saude
 
-A imagem-base atual foi indicada pelo usuário: [fotografia hospedada no Pinterest](https://i.pinimg.com/736x/1d/2d/b2/1d2db27d7fbd575445f8f6b81f3d64ba.jpg). O arquivo recebido está em `baseline-source.jpg`; autoria e licença da fotografia não foram informadas. Sua disponibilidade nesse endereço não equivale a uma licença de reutilização.
+A imagem-base atual é a fotografia anexada pelo usuário em 28/10/2026, que substituiu a referência anterior do Pinterest. A cópia JPEG de referência está em `baseline-source.jpg`; autoria e licença da fotografia não foram informadas.
 
-`example-frame.jpg` adapta a fotografia inteira para 720 × 1280, com uma extensão do fundo no topo para acomodar os títulos, sem cortar as mãos ou o rosto. `editorial-frame.jpg` deriva dessa composição com contraste discreto e fundo suavizado, mantendo o enquadramento completo. Nenhum novo rosto foi gerado. A fotografia anterior de João Victor foi substituída nos exemplos atuais.
+`example-frame.jpg` e `editorial-frame.jpg` adaptam a fotografia inteira para 720 × 1280, centralizada na parte inferior, com margens claras e uma área superior escura em degradê para a leitura dos efeitos. O rosto e o corpo não são cortados nem retocados. Nenhum novo rosto foi gerado. A preparação é reproduzível em `scripts/gallery_art.py`.
 
 Galerias, 51 miniaturas e GIF foram produzidos com `scripts/build_gallery.py`. O GIF anima uma fotografia estática e não representa rastreamento em vídeo em movimento. As imagens são exemplos gráficos; não indicam vínculo, profissão, depoimento ou endosso da pessoa retratada.
 
