@@ -39,9 +39,11 @@ Coloque o efeito Órbita no meu vídeo, de 4 a 7 segundos.
 
 **[Veja os 51 efeitos e escolha pelo nome →](docs/CATALOGO.md)**
 
-## Alguns exemplos
+## Os 51 efeitos
 
-![Prévias editoriais geradas pelo renderizador](assets/preview.jpg)
+[![Grid vertical com os 51 efeitos numerados](assets/all-effects.jpg)](assets/all-effects.jpg)
+
+*Clique na imagem para ampliar.*
 
 **Gostou de mais de um?** Peça à IA para combinar efeitos em momentos diferentes.
 

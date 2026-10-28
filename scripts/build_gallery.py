@@ -78,6 +78,7 @@ def make():
   if (ASSETS/f'{alias}.jpg').exists():shutil.copyfile(ASSETS/f'{name}.jpg',ASSETS/f'{alias}.jpg')
  board(NEW,'creative-six.jpg','Seis ideias novas para seus vídeos','Scanner · Lente · Mapa · Pergunta e resposta · Fonte · Pulso')
  board(POPULAR,'preview.jpg',f'{COUNT} efeitos. Você escolhe o nome.','Alguns exemplos para começar · Claude Code + Codex')
+ board(list(effects.EFFECTS),'all-effects.jpg',f'{COUNT} efeitos. Um catálogo completo.','Escolha pelo nome e peça à sua IA.')
  names=list(effects.EFFECTS);pages=math.ceil(len(names)/9)
  for i in range(pages):
   board(names[i*9:(i+1)*9],f'gallery-{i+1:02d}.jpg',f'Catálogo de efeitos · {i+1} de {pages}','Retrato real · Presets editoriais · Efeito pelo nome')
