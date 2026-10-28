@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""45 efeitos locais para vídeos educativos. #Tecnologia #Saude"""
+"""51 efeitos locais para vídeos educativos. #Tecnologia #Saude"""
 from __future__ import annotations
 
 import argparse
@@ -317,7 +317,7 @@ def render_effect(frame, face, e, t):
     fade = min(ease(local / .26), max(0., min(1., (e['end'] - t) / .24)))
     kind = ENGINE_NAMES.get(e['effect'],e['effect'])
     if e['effect'] in full_effects.FULL_NAMES:
-        api=SimpleNamespace(font=font,fit=fit,text_center=text_center,panel_layout=panel_layout,zoom=zoom)
+        api=SimpleNamespace(font=font,fit=fit,text_center=text_center,panel_layout=panel_layout,zoom=zoom,cards_for=full_effects.cards_for)
         return full_effects.render_full(frame,face,e,t,api)
     if kind in EXTRA_EFFECTS:
         return render_extra(frame, face, e, t, fade)
@@ -543,7 +543,7 @@ def run_video(args):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='mode', required=True)
-    sub.add_parser('list', help='Lista os 45 efeitos')
+    sub.add_parser('list', help='Lista os 51 efeitos')
     sub.add_parser('doctor', help='Confere dependências locais')
     for mode in ('render', 'preview'):
         s = sub.add_parser(mode)

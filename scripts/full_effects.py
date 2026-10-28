@@ -1,6 +1,7 @@
 """Composições locais do catálogo completo. #Saude #Tecnologia"""
 from pathlib import Path
 import math
+import creative_effects
 import numpy as np
 import cv2
 from PIL import Image, ImageDraw, ImageFilter
@@ -21,11 +22,13 @@ DEFAULTS = {
  'messages':'Anote suas dúvidas|Leve suas perguntas|Converse na consulta',
  'place-in-grid':'Seu conteúdo',
 }
+DEFAULTS.update(creative_effects.DEFAULTS)
 LIMITS={name:3 for name in DEFAULTS}
 LIMITS.update({'tap':2,'pause-point':1,'uninstall':1,'reel-frame':1,'shortcut-rain':8,
                'scribble':1,'backdrop-word':1,'profile-wall':1,'tier-list':2,'broll-split':1,
                'phone-fan':1,'liquid-glass-graph':1,'match-cut':1,'led-sign':2,
                'over-the-shoulder-zoom':2,'place-in-grid':1})
+LIMITS.update(creative_effects.LIMITS)
 FULL_NAMES=set(DEFAULTS)|{'swipe','rabbit-hole','slow-push'}
 MINT=(94,233,193,255); WHITE=(248,250,252,255); INK=(14,29,39,245)
 
@@ -77,6 +80,8 @@ def arrow(d,start,end,color,width):
 
 
 def render_full(frame,face,e,t,api):
+ if e['effect'] in creative_effects.DEFAULTS:
+  return creative_effects.render(frame,face,e,t,api)
  h,w=frame.shape[:2];name=e['effect'];local=t-e['start'];duration=e['end']-e['start']
  p=max(0.,min(1.,local/duration));fade=min(ease(local/.25),max(0.,min(1.,(duration-local)/.25)))
  lines=e.get('text','').split('|');image=rgba(frame);layer=Image.new('RGBA',(w,h));d=ImageDraw.Draw(layer)

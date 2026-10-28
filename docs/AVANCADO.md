@@ -2,7 +2,7 @@
 
 #Saude #Tecnologia
 
-[Voltar ao início](../README.md) · [Ver os 45 efeitos](CATALOGO.md)
+[Voltar ao início](../README.md) · [Ver os 51 efeitos](CATALOGO.md)
 
 Este guia é opcional. Para começar, basta pedir à sua IA para instalar e usar os efeitos pelo nome.
 
@@ -109,7 +109,7 @@ Salve como `meu-plano.json` e execute:
   --plan "meu-plano.json"
 ```
 
-O [plano inicial](../examples/plan.json) mantém a sequência de seis efeitos e precisa de pelo menos 18 segundos. O [plano dos 45 efeitos](../examples/all-effects.json) demonstra todo o catálogo em 90 segundos; ajuste os intervalos ao seu vídeo. Intervalos sobrepostos são rejeitados. Deixe trechos limpos entre entradas; não é necessário preencher o vídeo inteiro.
+O [plano inicial](../examples/plan.json) mantém a sequência de seis efeitos e precisa de pelo menos 18 segundos. O [plano dos 51 efeitos](../examples/all-effects.json) demonstra todo o catálogo em 102 segundos; ajuste os intervalos ao seu vídeo. Intervalos sobrepostos são rejeitados. Deixe trechos limpos entre entradas; não é necessário preencher o vídeo inteiro.
 
 ### Exemplos de efeitos
 
@@ -175,7 +175,7 @@ Para testar, prefira uma gravação sua sem pacientes ou informações identific
 
 A instalação isolada e os testes foram validados em macOS ARM, Python 3.14 e FFmpeg 8.1. As instruções de Linux e Windows ainda precisam de validação nesses sistemas.
 
-Os testes geram vídeos temporários para verificar exportação, preservação de áudio, proteção do original e erros de plano. As seis galerias e os 45 thumbnails são gerados pelo próprio renderizador usando o frame autorizado em `assets/`.
+Os testes geram vídeos temporários para verificar exportação, preservação de áudio, proteção do original e erros de plano. As sete galerias e os 51 thumbnails são gerados pelo próprio renderizador usando o frame autorizado em `assets/`.
 
 Quer contribuir? Abra uma issue com o efeito desejado, uma descrição do movimento e um exemplo que você possa compartilhar. Melhorias de tracking, enquadramento e instalação são bem-vindas. Se abrir um PR visual, inclua antes/depois e como testou.
 
@@ -203,3 +203,16 @@ A pausa congela o quadro do início do efeito, mantendo o áudio e o tempo do v�
 ### Nomes antigos
 
 `focus`, `grade`, `receipt`, `comment`, `countdown`, `cover`, `glass`, `stamp`, `split` e `headline` continuam aceitos. O catálogo exibe os nomes atuais.
+
+## Seis efeitos de explicação visual
+
+| Nome | Como personalizar com `--text` |
+|---|---|
+| Scanner de ideias | Uma frase curta que será revelada pela faixa luminosa |
+| Lente explicativa | Uma legenda; use `--images` para ampliar um detalhe de imagem própria |
+| Mapa de ideias | `Tema central|Conceito 1|Conceito 2|Conceito 3` |
+| Virada de pergunta | `Sua pergunta?|Sua resposta` |
+| Fonte em destaque | `Seu ponto principal|Sua referência` |
+| Pulso de ideia | Uma frase curta para acompanhar a onda luminosa |
+
+Scanner e Pulso são animações gráficas: não analisam imagens, sinais biológicos ou saúde. A Lente amplia pixels existentes e não recupera detalhes. Fonte em destaque exibe o texto fornecido; não busca nem valida publicações. Conceitos e cartões usam o espaço acima do rosto, com redução ou quebra de texto para caber.

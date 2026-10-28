@@ -48,6 +48,12 @@ CATALOG = [
  ('over-the-shoulder-zoom','Zoom lateral','A imagem se aproxima de lados alternados com cartões.',None),
  ('messages','Mensagens','Notificações aparecem em sequência.',None),
  ('place-in-grid','Grade de vídeos','O apresentador entra no centro de uma grade 3 por 3.',None),
+ ('idea-scan','Scanner de ideias','Uma faixa luminosa revela a palavra principal.',None),
+ ('focus-lens','Lente explicativa','Uma lente amplia um detalhe real da sua imagem.',None),
+ ('concept-map','Mapa de ideias','Um tema se conecta a três conceitos em sequência.',None),
+ ('question-flip','Virada de pergunta','Um cartão gira de pergunta para resposta.',None),
+ ('source-pin','Fonte em destaque','Uma referência ganha cartão e sublinhado animado.',None),
+ ('idea-pulse','Pulso de ideia','Uma onda luminosa destaca uma frase.',None),
 ]
 EFFECTS = {name: desc for name, _, desc, _ in CATALOG}
 ENGINE_NAMES = {name: engine or name for name, _, _, engine in CATALOG}

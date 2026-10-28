@@ -2,7 +2,7 @@
 
 ![Você grava. Sua IA aplica os efeitos.](assets/hero.png)
 
-**45 efeitos para seus vídeos. Peça pelo nome à sua IA.**
+**51 efeitos para seus vídeos. Peça pelo nome à sua IA.**
 
 [Escolher um efeito](docs/CATALOGO.md) · [Guia avançado](docs/AVANCADO.md)
 
@@ -37,7 +37,7 @@ Ou simplesmente:
 Coloque o efeito Órbita no meu vídeo, de 4 a 7 segundos.
 ```
 
-**[Veja os 45 efeitos e escolha pelo nome →](docs/CATALOGO.md)**
+**[Veja os 51 efeitos e escolha pelo nome →](docs/CATALOGO.md)**
 
 ## Alguns exemplos
 

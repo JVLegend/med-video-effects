@@ -6,7 +6,7 @@ Escolha um nome e peça à sua IA: **“Use o efeito Órbita no meu vídeo, de 3
 
 [Voltar ao início](../README.md) · [Opções avançadas](AVANCADO.md)
 
-São versões locais dos 45 estilos. Cartões usam suas imagens, quando fornecidas; sem elas, usam um frame do próprio vídeo. Os layouts são adaptados ao espaço disponível e não fazem recorte semântico da pessoa.
+São versões locais dos 51 estilos. Cartões usam suas imagens, quando fornecidas; sem elas, usam um frame do próprio vídeo. Os layouts são adaptados ao espaço disponível e não fazem recorte semântico da pessoa.
 
 | Nº | Peça por este nome | Nome técnico | O que acontece |
 |---|---|---|---|
@@ -55,6 +55,18 @@ São versões locais dos 45 estilos. Cartões usam suas imagens, quando fornecid
 | 43 | Zoom lateral | `over-the-shoulder-zoom` | A imagem se aproxima de lados alternados com cartões. |
 | 44 | Mensagens | `messages` | Notificações aparecem em sequência. |
 | 45 | Grade de vídeos | `place-in-grid` | O apresentador entra no centro de uma grade 3 por 3. |
+| 46 | Scanner de ideias | `idea-scan` | Uma faixa luminosa revela a palavra principal. |
+| 47 | Lente explicativa | `focus-lens` | Uma lente amplia um detalhe real da sua imagem. |
+| 48 | Mapa de ideias | `concept-map` | Um tema se conecta a três conceitos em sequência. |
+| 49 | Virada de pergunta | `question-flip` | Um cartão gira de pergunta para resposta. |
+| 50 | Fonte em destaque | `source-pin` | Uma referência ganha cartão e sublinhado animado. |
+| 51 | Pulso de ideia | `idea-pulse` | Uma onda luminosa destaca uma frase. |
+
+## Seis efeitos criativos novos
+
+![Seis efeitos novos](../assets/creative-six.jpg)
+
+Peça “Use Mapa de ideias com Consulta, Dúvidas, Histórico e Próximos passos”. Para Virada de pergunta, forneça a pergunta e a resposta; para Fonte em destaque, forneça o ponto e a referência.
 
 ## Galeria 1
 
@@ -78,7 +90,11 @@ São versões locais dos 45 estilos. Cartões usam suas imagens, quando fornecid
 
 ## Galeria 6
 
-![Exemplos 41 a 45](../assets/gallery-06.jpg)
+![Exemplos 41 a 48](../assets/gallery-06.jpg)
+
+## Galeria 7
+
+![Exemplos 49 a 51](../assets/gallery-07.jpg)
 
 ## Um pedido com vários efeitos
 

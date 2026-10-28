@@ -1,7 +1,7 @@
 ---
 name: med-video-effects
 description: >-
-  Edite vídeos educativos de médicos com 45 efeitos locais: títulos, órbita, foco,
+  Edite vídeos educativos de médicos com 51 efeitos locais: títulos, órbita, foco,
   checklist, cartões, vidro, gráficos ilustrativos, notificações e transições.
   Use quando o usuário pedir um efeito pelo nome ou uma edição visual de vídeo próprio.
 ---
@@ -31,7 +31,7 @@ Use o vídeo, o texto, as imagens e o destino informados. Pergunte só o que fal
 .venv/bin/python scripts/effects.py render "/caminho/video.mp4" "/caminho/video_editado.mp4" --effect "Título em caixa" --text "Leve suas dúvidas|para a consulta" --start 0 --end 4
 ```
 
-Para várias entradas, escreva uma lista `effects` com `effect`, `start`, `end` e `text` opcional; use `--plan`. Veja `examples/plan.json` e `examples/all-effects.json` (45 efeitos em 90 s). Intervalos sobrepostos são rejeitados. Para cartões/B-roll, use `--images` ou `images` no plano com uma pasta local de JPG/PNG/WebP. Sem imagens, o efeito reutiliza um frame do vídeo.
+Para várias entradas, escreva uma lista `effects` com `effect`, `start`, `end` e `text` opcional; use `--plan`. Veja `examples/plan.json` e `examples/all-effects.json` (51 efeitos em 102 s). Intervalos sobrepostos são rejeitados. Para cartões/B-roll, use `--images` ou `images` no plano com uma pasta local de JPG/PNG/WebP. Sem imagens, o efeito reutiliza um frame do vídeo.
 
 Inspecione as prévias e ajuste texto/enquadramento antes de exportar. Preserve o original e escolha uma saída nova. O detector é básico; se não encontrar rosto ou espaço, alguns elementos são omitidos. Órbita e palavras usam espaço acima do rosto, sem recorte semântico. Não prometa camadas atrás da pessoa.
 

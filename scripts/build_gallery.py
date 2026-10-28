@@ -9,7 +9,9 @@ from catalog import CATALOG
 
 ROOT=Path(__file__).resolve().parent.parent
 ASSETS=ROOT/'assets'
-POPULAR=['headline-box','orbit','locked-on','todo','spotlight','glass-widgets','phone-fan','place-in-grid']
+NEW=['idea-scan','focus-lens','concept-map','question-flip','source-pin','idea-pulse']
+POPULAR=['headline-box','orbit']+NEW
+COUNT=len(CATALOG)
 INFO={name:(i+1,label,desc) for i,(name,label,desc,_) in enumerate(CATALOG)}
 
 def plan(name,end=4):
@@ -42,7 +44,8 @@ def make():
   sample=.48 if name=='dot-reveal' else 1.7 if name=='liquid-glass-graph' else 2.7
   out,_=effects.render_effect(frame.copy(),face.copy(),plan(name),sample)
   Image.fromarray(out).save(ASSETS/f'{name}.jpg',quality=90)
- board(POPULAR,'preview.jpg','45 efeitos. Você escolhe o nome.','Alguns exemplos para começar · Claude Code + Codex')
+ board(NEW,'creative-six.jpg','Seis ideias novas para seus vídeos','Scanner · Lente · Mapa · Pergunta e resposta · Fonte · Pulso')
+ board(POPULAR,'preview.jpg',f'{COUNT} efeitos. Você escolhe o nome.','Alguns exemplos para começar · Claude Code + Codex')
  names=list(effects.EFFECTS);pages=math.ceil(len(names)/8)
  for i in range(pages):
   board(names[i*8:(i+1)*8],f'gallery-{i+1:02d}.jpg',f'Catálogo de efeitos · {i+1} de {pages}','Todos os exemplos usam o mesmo frame de boca fechada.')
@@ -50,7 +53,7 @@ def make():
  d.rounded_rectangle((70,55,345,99),radius=22,fill=(17,56,58));d.text((91,64),'MED VIDEO EFFECTS',font=effects.font(22),fill=(114,234,200))
  d.text((70,145),'Você grava.',font=effects.font(91),fill=(245,249,250))
  d.text((70,254),'Sua IA aplica os efeitos.',font=effects.fit(['Sua IA aplica os efeitos.'],1450,91),fill=(103,229,193))
- d.text((73,394),'45 efeitos para vídeos de médicos · Claude Code + Codex',font=effects.font(35),fill=(164,186,202))
+ d.text((73,394),f'{COUNT} efeitos para vídeos de médicos · Claude Code + Codex',font=effects.font(35),fill=(164,186,202))
  d.text((75,492),'INSTALE UMA VEZ   /   PEÇA PELO NOME   /   CONFIRA O RESULTADO',font=effects.font(24),fill=(132,158,178))
  hero.save(ASSETS/'hero.png')
  gifs=[];small=np.array(source.resize((270,480),Image.Resampling.LANCZOS));sf=face*(270/source.width)
@@ -66,12 +69,13 @@ def make():
  doc=['# Escolha seu efeito','', '#Saude #Tecnologia','',
       'Escolha um nome e peça à sua IA: **“Use o efeito Órbita no meu vídeo, de 3 a 6 segundos.”**',
       '', '[Voltar ao início](../README.md) · [Opções avançadas](AVANCADO.md)','',
-      'São versões locais dos 45 estilos. Cartões usam suas imagens, quando fornecidas; sem elas, usam um frame do próprio vídeo. Os layouts são adaptados ao espaço disponível e não fazem recorte semântico da pessoa.','',
+      f'São versões locais dos {COUNT} estilos. Cartões usam suas imagens, quando fornecidas; sem elas, usam um frame do próprio vídeo. Os layouts são adaptados ao espaço disponível e não fazem recorte semântico da pessoa.','',
       '| Nº | Peça por este nome | Nome técnico | O que acontece |','|---|---|---|---|']
  for i,(name,label,desc,_) in enumerate(CATALOG):doc.append(f'| {i+1} | {label} | `{name}` | {desc} |')
- for i in range(pages):doc+=['',f'## Galeria {i+1}', '',f'![Exemplos {i*8+1} a {min(45,(i+1)*8)}](../assets/gallery-{i+1:02d}.jpg)']
+ doc+=['','## Seis efeitos criativos novos','','![Seis efeitos novos](../assets/creative-six.jpg)','','Peça “Use Mapa de ideias com Consulta, Dúvidas, Histórico e Próximos passos”. Para Virada de pergunta, forneça a pergunta e a resposta; para Fonte em destaque, forneça o ponto e a referência.']
+ for i in range(pages):doc+=['',f'## Galeria {i+1}', '',f'![Exemplos {i*8+1} a {min(COUNT,(i+1)*8)}](../assets/gallery-{i+1:02d}.jpg)']
  doc+=['','## Um pedido com vários efeitos','','```text','Use Título em caixa no início, Órbita de 4 a 7 segundos','e Checklist de 10 a 14 segundos. Preserve minha voz e gere uma prévia.','```','','Contadores, gráficos e rankings são recursos visuais. Forneça seus textos, dados e imagens; os exemplos não demonstram resultados clínicos.','']
  (ROOT/'docs/CATALOGO.md').write_text('\n'.join(doc),encoding='utf-8')
- print('45 thumbnails, seis galerias, capa, GIF e catálogo prontos.',flush=True)
+ print(f'{COUNT} thumbnails, {pages} galerias, capa, GIF e catálogo prontos.',flush=True)
 
 if __name__=='__main__':make()

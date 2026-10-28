@@ -264,6 +264,42 @@
       "start": 88,
       "end": 90,
       "text": "Seu conteúdo"
+    },
+    {
+      "effect": "idea-scan",
+      "start": 90,
+      "end": 92,
+      "text": "Uma ideia importante"
+    },
+    {
+      "effect": "focus-lens",
+      "start": 92,
+      "end": 94,
+      "text": "Veja de perto"
+    },
+    {
+      "effect": "concept-map",
+      "start": 94,
+      "end": 96,
+      "text": "Consulta|Dúvidas|Histórico|Próximos passos"
+    },
+    {
+      "effect": "question-flip",
+      "start": 96,
+      "end": 98,
+      "text": "Como se preparar?|Leve suas dúvidas"
+    },
+    {
+      "effect": "source-pin",
+      "start": 98,
+      "end": 100,
+      "text": "Seu ponto principal|Adicione a referência"
+    },
+    {
+      "effect": "idea-pulse",
+      "start": 100,
+      "end": 102,
+      "text": "Uma ideia de cada vez"
     }
   ]
 }

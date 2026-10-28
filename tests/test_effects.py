@@ -48,9 +48,9 @@ class MediaIntegration(unittest.TestCase):
     def tearDown(self):
         self.assertEqual(self.original_hash, hashlib.sha256(self.source.read_bytes()).hexdigest())
 
-    def test_forty_five_effects_export_and_keep_audio(self):
+    def test_fifty_one_effects_export_and_keep_audio(self):
         names = list(effects.EFFECTS)
-        self.assertEqual(len(names),45)
+        self.assertEqual(len(names),51)
         step=3/len(names)
         plan = {'effects':[{'effect':name,'start':i*step,'end':(i+1)*step} for i,name in enumerate(names)]}
         f=self.dir/'plano.json';f.write_text(json.dumps(plan))
@@ -93,14 +93,18 @@ class MediaIntegration(unittest.TestCase):
     def test_text_limits_for_new_cards(self):
         invalid=[{'effect':'stamp','text':'A'*33},
                  {'effect':'lineup','text':'um|dois|três|quatro'},
-                 {'effect':'comment','text':'uma|duas'}]
+                 {'effect':'comment','text':'uma|duas'},
+                 {'effect':'concept-map','text':'Tema|A|B|C|D'},
+                 {'effect':'source-pin','text':'Ponto|Fonte|Extra'}]
         for raw in invalid:
             with self.subTest(raw=raw),self.assertRaises(ValueError):
                 effects.validate_plan([dict(raw,start=0,end=3)],3)
 
     def test_friendly_names_and_previous_names_remain_usable(self):
         pairs={'Órbita':'orbit','Título em caixa':'headline-box','focus':'locked-on',
-               'grade':'moody','receipt':'the-bill','glass':'glass-widgets'}
+               'grade':'moody','receipt':'the-bill','glass':'glass-widgets',
+               'Mapa de ideias':'concept-map','Lente explicativa':'focus-lens',
+               'Pulso de ideia':'idea-pulse','Fonte em destaque':'source-pin'}
         for label,canonical in pairs.items():
             with self.subTest(label=label):
                 e=effects.validate_plan([dict(effect=label,start=0,end=2)],2)[0]
@@ -112,12 +116,14 @@ class MediaIntegration(unittest.TestCase):
     def test_cards_use_only_supplied_local_images(self):
         folder=self.dir/'minhas imagens';folder.mkdir()
         Image.new('RGB',(100,100),(255,0,0)).save(folder/'vermelho.png')
-        e=effects.validate_plan([dict(effect='orbit',images=str(folder),start=0,end=2)],2)[0]
-        frame=np.zeros((426,240,3),dtype=np.uint8)
-        out,_=effects.render_effect(frame,None,e,1)
-        red=(out[:,:,0]>200)&(out[:,:,1]<60)&(out[:,:,2]<60)
-        self.assertGreater(int(red.sum()),100)
-        self.assertEqual(len(e['_cards']),1)
+        for name in ['orbit','focus-lens']:
+            with self.subTest(effect=name):
+                e=effects.validate_plan([dict(effect=name,images=str(folder),start=0,end=2)],2)[0]
+                frame=np.zeros((426,240,3),dtype=np.uint8)
+                out,_=effects.render_effect(frame,None,e,1)
+                red=(out[:,:,0]>200)&(out[:,:,1]<60)&(out[:,:,2]<60)
+                self.assertGreater(int(red.sum()),100)
+                self.assertEqual(len(e['_cards']),1)
 
     def test_pause_reuses_the_initial_frame(self):
         e=effects.validate_plan([dict(effect='pause-point',start=0,end=3)],3)[0]
