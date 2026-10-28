@@ -22,6 +22,8 @@ Execute `python3 scripts/setup.py` na pasta do clone. Ele cria `.venv` e instala
 
 O usuário pode pedir pelo nome em português, sem slash command. Consulte [docs/CATALOGO.md](docs/CATALOGO.md) ou execute `scripts/effects.py list`. O CLI aceita nomes técnicos, nomes em português e aliases antigos. Use `--effect "Título em caixa"` ou `--effect headline-box`.
 
+Para reproduzir uma thumbnail, consulte `examples/gallery-presets.json`: escolha o item em `presets` pelo nome e aproveite texto, `accent` e imagens locais. O arquivo é uma coleção de alternativas, não uma sequência para executar inteira. O reenquadramento e as capas ilustrativas estão documentados em `assets/README.md`.
+
 Use o vídeo, o texto, as imagens e o destino informados. Pergunte só o que faltar para executar. Sem timing, uma entrada inicial de 2–4 s pode servir como rascunho. O script não transcreve: não invente o segundo em que uma palavra foi dita. Textos clínicos vêm do usuário; gráficos de exemplo são ilustrações, sem validação clínica.
 
 ## Conferir e renderizar
