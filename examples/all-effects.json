@@ -1,0 +1,98 @@
+{
+  "tags": [
+    "#Saude",
+    "#Tecnologia"
+  ],
+  "effects": [
+    {
+      "effect": "focus",
+      "start": 0,
+      "end": 2
+    },
+    {
+      "effect": "spotlight",
+      "start": 2,
+      "end": 4
+    },
+    {
+      "effect": "grade",
+      "start": 4,
+      "end": 6
+    },
+    {
+      "effect": "checklist",
+      "start": 6,
+      "end": 8,
+      "text": "Observe|Anote suas dúvidas|Converse com seu médico"
+    },
+    {
+      "effect": "split",
+      "start": 8,
+      "end": 10,
+      "text": "Informação clara|para cuidar melhor"
+    },
+    {
+      "effect": "headline",
+      "start": 10,
+      "end": 12,
+      "text": "Saúde com informação"
+    },
+    {
+      "effect": "lean-in",
+      "start": 12,
+      "end": 14
+    },
+    {
+      "effect": "lineup",
+      "start": 14,
+      "end": 16,
+      "text": "Observe|Pergunte|Converse"
+    },
+    {
+      "effect": "receipt",
+      "start": 16,
+      "end": 18,
+      "text": "Antes da consulta|Organize suas dúvidas|Leve suas anotações"
+    },
+    {
+      "effect": "comment",
+      "start": 18,
+      "end": 20,
+      "text": "Qual assunto você quer entender melhor?"
+    },
+    {
+      "effect": "countdown",
+      "start": 20,
+      "end": 22
+    },
+    {
+      "effect": "cover",
+      "start": 22,
+      "end": 24,
+      "text": "SAÚDE|Informação para uma boa conversa"
+    },
+    {
+      "effect": "glass",
+      "start": 24,
+      "end": 26,
+      "text": "Na próxima consulta|Leve suas dúvidas"
+    },
+    {
+      "effect": "stamp",
+      "start": 26,
+      "end": 28,
+      "text": "ANOTE"
+    },
+    {
+      "effect": "timeline",
+      "start": 28,
+      "end": 30,
+      "text": "Uma ideia de cada vez"
+    },
+    {
+      "effect": "dot-reveal",
+      "start": 30,
+      "end": 32
+    }
+  ]
+}

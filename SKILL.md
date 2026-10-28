@@ -1,8 +1,8 @@
 ---
 name: med-video-effects
 description: >-
-  Aplique seis efeitos locais a vídeos educativos de médicos: foco no rosto, spotlight,
-  cor cinematográfica, checklist, tela dividida e título em caixa. Use com vídeos próprios
+  Aplique 16 efeitos locais a vídeos educativos de médicos, incluindo títulos, checklist,
+  foco, luz, cartões, comentário digitado, recibo, carimbo e revelação por pontos. Use com vídeos próprios
   e texto fornecido pelo usuário; não transcreve nem produz orientação clínica.
 ---
 
@@ -28,8 +28,8 @@ Uma entrada simples:
 .venv/bin/python scripts/effects.py render "/caminho/video.mp4" "/caminho/video_editado.mp4" --effect headline --text "Leve suas dúvidas|para a consulta" --start 0 --end 4
 ```
 
-Para várias entradas, escreva uma lista `effects` com `effect`, `start`, `end` e `text` opcional. Veja `examples/plan.json`. Use `--plan /caminho/plano.json` no lugar de `--effect`. Intervalos sobrepostos são rejeitados. `|` separa até três itens/linhas em checklist/split e duas linhas em headline.
+Para várias entradas, escreva uma lista `effects` com `effect`, `start`, `end` e `text` opcional. Veja `examples/plan.json`. Use `--plan /caminho/plano.json` no lugar de `--effect`. Intervalos sobrepostos são rejeitados. `|` separa até três itens/linhas em checklist, split, lineup e receipt; duas linhas em headline, cover e glass. Comment recebe uma pergunta; stamp e timeline, uma linha. Consulte o README para limites e exemplos. O plano `examples/all-effects.json` demonstra os 16 efeitos em 32 s.
 
-Inspecione prévias no meio de cada efeito, ajustando textos e enquadramento antes de renderizar. O detector é simples: se perder o rosto, foco e spotlight são omitidos; títulos podem ser reduzidos ou omitidos quando falta espaço. Não afirme que houve recorte da pessoa ou tracking preciso sem verificar os quadros.
+Inspecione prévias no meio de cada efeito, ajustando textos e enquadramento antes de renderizar. O detector é simples: se perder o rosto, foco, aproximação e spotlight são omitidos; títulos podem ser reduzidos ou omitidos quando falta espaço. Não afirme que houve recorte da pessoa ou tracking preciso sem verificar os quadros.
 
 A exportação usa H.264, 30 fps e largura de 1080 px; `--width 720` gera uma prévia mais leve. AAC é copiado; outros áudios são convertidos para AAC. Vídeo sem áudio continua sem áudio. HDR exige conversão prévia para SDR. Confira início/meio/fim, duração e decodificação antes de entregar. Publicar conteúdo ou enviar vídeos a serviços externos exige pedido separado; este renderizador trabalha localmente.

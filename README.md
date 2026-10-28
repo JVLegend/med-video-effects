@@ -2,7 +2,7 @@
 
 ![Med Video Effects — Sua explicação merece um vídeo mais claro](assets/hero.png)
 
-**Seis efeitos para transformar uma gravação em uma explicação visual.**
+**16 efeitos para transformar uma gravação em uma explicação visual.**
 
 Feito para experimentar vídeos educativos de médicos com **Claude Code** e **Codex**.
 
@@ -11,7 +11,7 @@ Feito para experimentar vídeos educativos de médicos com **Claude Code** e **C
 ![License MIT](https://img.shields.io/badge/c%C3%B3digo-MIT-16a085)
 ![Status experimental](https://img.shields.io/badge/status-experimental-f4b942)
 
-[Ver os efeitos](#os-seis-efeitos) · [Começar](#comece-pelo-assistente) · [Instalar](#instalação) · [Usar no terminal](#uso-direto-no-terminal)
+[Ver os efeitos](#os-16-efeitos) · [Começar](#comece-pelo-assistente) · [Instalar](#instalação) · [Usar no terminal](#uso-direto-no-terminal)
 
 </div>
 
@@ -23,11 +23,13 @@ Você grava. O assistente organiza o pedido. O computador aplica os efeitos.
 
 Use um título para abrir uma explicação, um checklist para organizar pontos ou uma mudança de luz para dirigir a atenção. Escolha o texto, o intervalo e o efeito; confira a prévia e exporte o MP4.
 
-O renderizador roda **localmente**, preserva o arquivo original e não precisa de chave de API. O uso de Claude Code ou Codex segue o plano e as permissões da sua ferramenta. Esta é uma base experimental com seis efeitos, pronta para ser adaptada ao seu estilo.
+O renderizador roda **localmente**, preserva o arquivo original e não precisa de chave de API. O uso de Claude Code ou Codex segue o plano e as permissões da sua ferramenta. Esta é uma base experimental com 16 efeitos, pronta para ser adaptada ao seu estilo.
 
-## Os seis efeitos
+## Os 16 efeitos
 
-![Galeria de seis efeitos aplicados a um frame de João Victor](assets/preview.jpg)
+![Galeria de oito efeitos aplicados a um frame de João Victor](assets/preview.jpg)
+
+![Mais oito efeitos aplicados ao mesmo frame de João Victor](assets/preview-more.jpg)
 
 | Efeito | Nome no comando | O que acontece | Onde ajuda |
 |---|---|---|---|
@@ -37,13 +39,23 @@ O renderizador roda **localmente**, preserva o arquivo original e não precisa d
 | **04 · Checklist** | `checklist` | Até três itens recebem marcações em sequência | Organizar dúvidas, etapas ou tópicos |
 | **05 · Tela dividida** | `split` | Um cartão abre espaço no alto; a imagem inteira ocupa a parte inferior | Apresentar a ideia central sem cortar o rosto |
 | **06 · Título em caixa** | `headline` | Uma frase entra em uma caixa branca | Criar uma abertura clara |
+| **07 · Aproximação** | `lean-in` | Aproxima o enquadramento em até 16% | Enfatizar uma fala |
+| **08 · Cartões numerados** | `lineup` | Até três cartões entram em sequência | Apresentar pontos ou etapas |
+| **09 · Recibo** | `receipt` | Uma nota de papel se desenrola | Resumir o que levar para uma conversa |
+| **10 · Comentário digitado** | `comment` | Uma pergunta é digitada no cartão | Abrir um tema a partir de uma dúvida |
+| **11 · Contagem regressiva** | `countdown` | Os números 3, 2 e 1 se alternam | Preparar uma explicação |
+| **12 · Capa editorial** | `cover` | Uma manchete e um subtítulo acima do rosto | Dar identidade a um tema |
+| **13 · Cartão de vidro** | `glass` | Cartão translúcido sobre o fundo desfocado | Destacar uma ideia curta |
+| **14 · Carimbo** | `stamp` | Um carimbo colorido entra inclinado | Marcar um ponto para anotar |
+| **15 · Timeline** | `timeline` | Faixas de edição e cursor avançam | Mostrar o progresso visual do trecho |
+| **16 · Revelação por pontos** | `dot-reveal` | A imagem se forma como pontos e ganha nitidez | Criar uma entrada visual |
 
 <details>
-<summary><strong>Ver uma demonstração animada dos seis efeitos</strong></summary>
+<summary><strong>Ver uma demonstração animada dos 16 efeitos</strong></summary>
 
 ![Demonstração animada a partir de um único frame](assets/demo.gif)
 
-O GIF usa um único frame autorizado. Os vídeos reais usam detecção de rosto quadro a quadro; os limites desse detector estão descritos abaixo.
+Todas as imagens foram refeitas com um frame frontal de boca fechada e olhos abertos. O GIF usa esse único frame autorizado. Os vídeos reais usam detecção de rosto quadro a quadro; os limites desse detector estão descritos abaixo.
 
 </details>
 
@@ -147,7 +159,7 @@ Execute dentro da pasta do clone. Nos exemplos, `.venv/bin/python` é o Python l
   --start 4 --end 8
 ```
 
-`|` separa linhas ou itens. Headline aceita até duas linhas; split e checklist aceitam até três. Os itens do checklist são marcados automaticamente durante o intervalo; não há sincronização por palavra.
+`|` separa linhas ou itens. Headline, cover e glass aceitam até duas linhas; split, checklist, lineup e receipt aceitam até três. Comment aceita uma pergunta, quebrada automaticamente em até duas linhas visíveis; stamp e timeline aceitam uma linha. Carimbos aceitam até 32 caracteres; outros textos, até 180, sujeitos ao espaço disponível. Os itens do checklist são marcados automaticamente durante o intervalo; não há sincronização por palavra.
 
 ### Vários efeitos no mesmo vídeo
 
@@ -173,7 +185,22 @@ Salve como `meu-plano.json` e execute:
   --plan "meu-plano.json"
 ```
 
-O [plano de exemplo](examples/plan.json) percorre os seis efeitos e precisa de pelo menos 18 segundos de vídeo. Intervalos sobrepostos são rejeitados. Deixe trechos limpos entre entradas; não é necessário preencher o vídeo inteiro.
+O [plano inicial](examples/plan.json) mantém a sequência de seis efeitos e precisa de pelo menos 18 segundos. O [plano dos 16 efeitos](examples/all-effects.json) demonstra todo o catálogo em 32 segundos; ajuste os intervalos ao seu vídeo. Intervalos sobrepostos são rejeitados. Deixe trechos limpos entre entradas; não é necessário preencher o vídeo inteiro.
+
+### Exemplos com os novos efeitos
+
+```sh
+.venv/bin/python scripts/effects.py render "/caminho/video.mp4" "video-pergunta.mp4" \
+  --effect comment --text "Qual é sua dúvida?" --start 0 --end 4
+
+.venv/bin/python scripts/effects.py render "/caminho/video.mp4" "video-etapas.mp4" \
+  --effect lineup --text "Observe|Pergunte|Converse" --start 4 --end 8
+
+.venv/bin/python scripts/effects.py render "/caminho/video.mp4" "video-pontos.mp4" \
+  --effect dot-reveal --start 0 --end 2
+```
+
+A contagem regressiva divide o intervalo em três partes iguais. Comentários digitados e cartões usam o tempo do efeito, sem acompanhar palavras faladas. A timeline representa o progresso do trecho, não um dado clínico. Capa e cartão de vidro ficam na frente da imagem, acima do rosto; não há texto atrás da pessoa.
 
 ### Ajustes disponíveis
 
@@ -190,8 +217,8 @@ A largura padrão é 1080 px; em vídeo vertical 9:16 isso resulta em 1080×1920
 ## O que esta versão faz — e seus limites
 
 - O detector de rosto do OpenCV funciona melhor com uma pessoa de frente, luz suficiente e rosto visível. Não usa reconhecimento de identidade.
-- Foco e spotlight são omitidos quando não há rosto detectável. Títulos se adaptam ao espaço acima do rosto; podem ser reduzidos ou omitidos se não couberem. **Inspecione as prévias.**
-- Spotlight usa uma máscara geométrica suave. Ainda não há recorte semântico de cabelo/corpo, texto atrás da pessoa ou seleção entre vários apresentadores.
+- Foco, aproximação e spotlight são omitidos quando não há rosto detectável. Títulos se adaptam ao espaço acima do rosto; podem ser reduzidos ou omitidos se não couberem. **Inspecione as prévias.**
+- Spotlight usa uma máscara geométrica suave. A aproximação usa zoom digital. Ainda não há recorte semântico de cabelo/corpo, texto atrás da pessoa ou seleção entre vários apresentadores.
 - Esta versão trabalha com SDR. HDR deve ser convertido antes; o script recusa HDR identificado para evitar exportar cores incorretas.
 - As fontes vêm do sistema ou do Pillow. O visual pode variar entre sistemas; use `--font` para padronizar.
 - Não há legendas automáticas, transcrição, música, efeitos sonoros ou publicação automática.

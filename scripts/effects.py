@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seis efeitos locais para vídeos educativos. #Tecnologia #Saude"""
+"""Dezesseis efeitos locais para vídeos educativos. #Tecnologia #Saude"""
 from __future__ import annotations
 
 import argparse
@@ -23,12 +23,33 @@ EFFECTS = {
     'checklist': 'Lista de até três pontos que são marcados em sequência.',
     'split': 'Cartão de título que abre espaço acima do apresentador.',
     'headline': 'Frase em caixa branca com entrada animada.',
+    'lean-in': 'Aproximação rápida e suave para enfatizar uma fala.',
+    'lineup': 'Três cartões numerados aparecem em sequência.',
+    'receipt': 'Uma nota em papel se desenrola com até três linhas.',
+    'comment': 'Uma pergunta é digitada em um cartão de comentário.',
+    'countdown': 'Contagem regressiva de 3 a 1 acima do rosto.',
+    'cover': 'Masthead e subtítulo em estilo de capa editorial.',
+    'glass': 'Cartão translúcido com título e complemento.',
+    'stamp': 'Carimbo colorido entra com uma pequena rotação.',
+    'timeline': 'Linha de edição com playhead e progresso do trecho.',
+    'dot-reveal': 'O quadro surge como pontos e volta à imagem nítida.',
 }
 DEFAULTS = {
     'checklist': 'Observe|Anote suas dúvidas|Converse com seu médico',
     'split': 'Informação clara|para cuidar melhor',
     'headline': 'Saúde com informação',
+    'lineup': 'Observe|Pergunte|Converse',
+    'receipt': 'Antes da consulta|Organize suas dúvidas|Leve suas anotações',
+    'comment': 'Qual assunto você quer entender melhor?',
+    'cover': 'SAÚDE|Informação para uma boa conversa',
+    'glass': 'Na próxima consulta|Leve suas dúvidas',
+    'stamp': 'ANOTE',
+    'timeline': 'Uma ideia de cada vez',
 }
+LINE_LIMITS = {'checklist': 3, 'split': 3, 'headline': 2, 'lineup': 3,
+               'receipt': 3, 'comment': 1, 'cover': 2, 'glass': 2, 'stamp': 1, 'timeline': 1}
+EXTRA_EFFECTS = {'lean-in', 'lineup', 'receipt', 'comment', 'countdown',
+                 'cover', 'glass', 'stamp', 'timeline', 'dot-reveal'}
 FONT_PATH = None
 _FONT_CACHE = {}
 
@@ -146,11 +167,167 @@ def panel_layout(face, w, h, desired):
     return y, height
 
 
+def render_extra(frame, face, e, t, fade):
+    """Ten visual treatments sharing the same geometry and text helpers."""
+    h, w = frame.shape[:2]
+    kind = e['effect']; local = t - e['start']; duration = e['end'] - e['start']
+    if kind == 'lean-in':
+        if face is None:
+            return frame, face
+        amount = 1 + .16 * ease(local / .22) * min(1., (duration - local) / .3)
+        return zoom(frame, face, amount)
+    if kind == 'dot-reveal':
+        reveal = min(1., local / max(.1, min(1.2, duration * .6)))
+        if reveal >= 1:
+            return frame, face
+        cell = max(5, int(w / 42))
+        dots = Image.new('RGB', (w, h), (6, 13, 22)); dd = ImageDraw.Draw(dots)
+        radius = max(1, cell * (.20 + .27 * ease(reveal)))
+        for y in range(cell // 2, h, cell):
+            for x in range(cell // 2, w, cell):
+                color = tuple(int(v) for v in frame[y, x])
+                dd.ellipse((x-radius, y-radius, x+radius, y+radius), fill=color)
+        # The final quarter blends the gaps away instead of an abrupt cut.
+        blend = ease((reveal - .72) / .28)
+        return np.asarray(Image.blend(dots, Image.fromarray(frame), blend)).copy(), face
+
+    image = Image.fromarray(frame).convert('RGBA')
+    layer = Image.new('RGBA', (w, h)); d = ImageDraw.Draw(layer)
+    lines = e['text'].split('|')
+    mint, white, ink = (94, 233, 193, 255), (248, 250, 252, 255), (17, 30, 40, 255)
+    y, available = panel_layout(face, w, h, h * .29)
+    if kind == 'timeline':
+        # Timeline belongs near the bottom; move it above the face if necessary.
+        ph = int(h * .12); top = int(h * .84)
+        if face is not None and top < face[1] + face[3] * .7:
+            if available < ph:
+                return frame, face
+            top = y
+        x0, x1 = int(w * .06), int(w * .94)
+        d.rounded_rectangle((x0, top, x1, top + ph), radius=w*.018, fill=(9,20,29,235))
+        f = fit(lines, w * .78, int(w*.035))
+        text_center(d, w/2, top+ph*.20, lines[0], f, white)
+        for j, width in enumerate([.17, .26, .21, .12]):
+            xx=x0+w*.035+sum([.17,.26,.21,.12][:j])*w
+            d.rounded_rectangle((xx, top+ph*.43, xx+w*(width-.015), top+ph*.69), radius=w*.006, fill=(0,138+20*(j%2),125,255))
+        p=min(1., max(0.,local/duration));xx=x0+w*.035+(x1-x0-w*.07)*p
+        d.line((xx,top+ph*.36,xx,top+ph*.85),fill=white,width=max(2,int(w*.004)))
+        d.ellipse((xx-w*.009,top+ph*.31,xx+w*.009,top+ph*.43),fill=mint)
+    else:
+        if available < w * .10:
+            return frame, face
+        cx = w / 2
+        if kind == 'lineup':
+            cardw = w * .25; cardh = min(available-w*.035,w*.25)
+            if cardh < w*.14:
+                return frame, face
+            for j, text in enumerate(lines):
+                k = ease((local - j*.16)/.3)
+                if not k:
+                    continue
+                x = w/2 + (j-(len(lines)-1)/2)*w*.285; top=y+(1-k)*w*.05
+                d.rounded_rectangle((x-cardw/2,top,x+cardw/2,top+cardh),radius=w*.018,fill=ink,outline=mint,width=max(1,int(w*.003)))
+                text_center(d,x,top+cardh*.32,str(j+1).zfill(2),font(cardh*.29),mint)
+                f=fit([text],cardw*.86,int(w*.034))
+                text_center(d,x,top+cardh*.73,text,f,white)
+        elif kind == 'receipt':
+            ph=min(available,int(w*.42));pw=int(w*.83);left=(w-pw)//2
+            paper=Image.new('RGBA',(pw,ph));pd=ImageDraw.Draw(paper)
+            pd.rectangle((0,0,pw,ph),fill=(248,245,233,255))
+            for xx in range(0,pw,max(3,int(w*.025))):
+                pd.polygon([(xx,ph-1),(xx+w*.0125,ph-w*.018),(xx+w*.025,ph-1)],fill=(0,0,0,0))
+            f=fit(lines,pw*.88,min(int(w*.041),int(ph/(len(lines)*2+1))))
+            for j,text in enumerate(lines):
+                cy=ph*.17+j*ph*.67/max(1,len(lines)-1)
+                text_center(pd,pw/2,cy,text,f,ink)
+                if j<len(lines)-1:
+                    pd.line((pw*.07,cy+f.size*.85,pw*.93,cy+f.size*.85),fill=(153,164,157,255),width=max(1,int(w*.002)))
+            reveal=max(1,int(ph*ease(local/.65)))
+            layer.alpha_composite(paper.crop((0,0,pw,reveal)),(left,y))
+        elif kind == 'comment':
+            ph=min(available,int(w*.25));x0,x1=int(w*.07),int(w*.93)
+            d.rounded_rectangle((x0,y,x1,y+ph),radius=w*.026,fill=(252,252,250,255))
+            r=w*.028; ax=x0+w*.065;ay=y+ph*.28
+            d.ellipse((ax-r,ay-r,ax+r,ay+r),fill=(0,146,122,255))
+            text_center(d,ax,ay,'?',font(r*1.4),white)
+            d.text((ax+r+w*.03,ay),'PERGUNTA',font=font(w*.029),fill=(77,105,113,255),anchor='lm')
+            # Wrap one input paragraph into at most two visible rows.
+            size=max(10,min(int(w*.040),int(ph*.23)))
+            while True:
+                f=font(size);rows=['']
+                for word in lines[0].split():
+                    candidate=(rows[-1]+' '+word).strip()
+                    if f.getlength(candidate)>w*.74 and rows[-1]:
+                        rows.append(word)
+                    else:
+                        rows[-1]=candidate
+                if len(rows)<=2 and max(f.getlength(row) for row in rows)<=w*.74:
+                    break
+                size-=1
+                if size<10:
+                    raise ValueError('Comentário muito longo para esta resolução; encurte a pergunta.')
+            count=min(len(lines[0]),int(max(0,local-.25)*len(lines[0])/max(.3,duration*.55)))
+            remaining=count; cursor=None
+            for j,row in enumerate(rows):
+                shown=row[:max(0,remaining)];cy=y+ph*.62+j*f.size*1.25
+                if shown:
+                    d.text((x0+w*.035,cy),shown,font=f,fill=ink,anchor='lm')
+                if remaining>=0:
+                    cursor=(x0+w*.035+f.getlength(shown),cy)
+                remaining-=len(row)+1
+            if count<len(lines[0]) and int(local*4)%2==0 and cursor:
+                xx,cy=cursor
+                d.line((xx,cy-f.size*.55,xx,cy+f.size*.55),fill=(0,146,122,255),width=max(1,int(w*.002)))
+        elif kind == 'countdown':
+            side=min(available,w*.24);left=(w-side)/2
+            number=3-min(2,int(local/duration*3))
+            phase=(local/duration*3)%1;scale=.92+.08*ease(phase/.3)
+            top=y+(available-side)/2;pad=side*(1-scale)/2
+            d.rounded_rectangle((left+pad,top+pad,left+side-pad,top+side-pad),radius=side*.17,fill=ink,outline=mint,width=max(2,int(w*.004)))
+            text_center(d,cx,top+side*.49,str(number),font(side*.65*scale),white)
+        elif kind == 'cover':
+            f=fit([lines[0]],w*.88,min(int(w*.16),int(available*.48)))
+            text_center(d,cx,y+f.size*.66,lines[0],f,mint)
+            rule=y+f.size*1.4
+            d.line((w*.08,rule,w*.92,rule),fill=white,width=max(2,int(w*.003)))
+            if len(lines)>1:
+                sub=fit([lines[1]],w*.85,min(int(w*.035),int(available*.20)))
+                text_center(d,cx,rule+sub.size*1.2,lines[1],sub,white)
+        elif kind == 'glass':
+            pw=int(w*.86);ph=min(available,int(w*.30));left=(w-pw)//2
+            region=image.crop((left,y,left+pw,y+ph)).filter(ImageFilter.GaussianBlur(w*.018))
+            region=Image.blend(region,Image.new('RGBA',region.size,(235,249,249,255)),.52)
+            mask=Image.new('L',(pw,ph));ImageDraw.Draw(mask).rounded_rectangle((0,0,pw-1,ph-1),radius=w*.03,fill=255)
+            region.putalpha(mask);layer.alpha_composite(region,(left,y))
+            d.rounded_rectangle((left+1,y+1,left+pw-2,y+ph-2),radius=w*.03,outline=(240,255,255,225),width=max(1,int(w*.003)))
+            f=fit(lines,pw*.85,min(int(w*.052),int(ph/(len(lines)*1.9))))
+            for j,text in enumerate(lines):
+                text_center(d,cx,y+ph/2+(j-(len(lines)-1)/2)*f.size*1.7,text,f,ink)
+        elif kind == 'stamp':
+            ph=min(available,int(w*.24));pw=int(w*.78)
+            stamp=Image.new('RGBA',(pw,ph));sd=ImageDraw.Draw(stamp)
+            pad=max(3,int(w*.01));color=(255,93,83,255)
+            sd.rounded_rectangle((pad,pad,pw-pad-1,ph-pad-1),radius=w*.013,outline=color,width=max(3,int(w*.008)))
+            sd.rounded_rectangle((pad*2,pad*2,pw-pad*2-1,ph-pad*2-1),radius=w*.009,outline=color,width=max(1,int(w*.002)))
+            f=fit(lines,pw*.82,min(int(w*.11),int(ph*.54)))
+            text_center(sd,pw/2,ph/2,lines[0],f,color)
+            # Rotate inside the available headroom, so even the corners stay clear.
+            rotated=stamp.rotate(-5+2*(1-ease(local/.25)),resample=Image.Resampling.BICUBIC,expand=True)
+            scale=min(1.,available/rotated.height)
+            if scale<1:
+                rotated=rotated.resize((max(1,int(rotated.width*scale)),max(1,int(rotated.height*scale))),Image.Resampling.LANCZOS)
+            layer.alpha_composite(rotated,(int((w-rotated.width)/2),y))
+    layer.putalpha(layer.getchannel('A').point(lambda x:int(x*fade)))
+    return np.array(Image.alpha_composite(image,layer).convert('RGB')),face
+
+
 def render_effect(frame, face, e, t):
     h, w = frame.shape[:2]
     local, duration = t - e['start'], e['end'] - e['start']
     fade = min(ease(local / .26), max(0., min(1., (e['end'] - t) / .24)))
     kind = e['effect']
+    if kind in EXTRA_EFFECTS:
+        return render_extra(frame, face, e, t, fade)
     if kind == 'grade':
         src = frame.astype(np.float32) / 255
         luminance = src @ np.array([.299, .587, .114], dtype=np.float32)
@@ -255,9 +432,10 @@ def validate_plan(items, duration):
         text = str(raw.get('text', DEFAULTS.get(raw['effect'], '')))
         if raw['effect'] in DEFAULTS:
             lines = text.split('|')
-            limit = 3 if raw['effect'] in ('split', 'checklist') else 2
-            if len(lines) > limit or any(not line.strip() for line in lines) or len(text) > 180:
-                raise ValueError(f'Texto inválido para {raw["effect"]}: até {limit} linhas/itens e 180 caracteres.')
+            limit = LINE_LIMITS[raw['effect']]
+            max_chars = 32 if raw['effect'] == 'stamp' else 180
+            if len(lines) > limit or any(not line.strip() for line in lines) or len(text) > max_chars:
+                raise ValueError(f'Texto inválido para {raw["effect"]}: até {limit} linhas/itens e {max_chars} caracteres.')
         item = dict(effect=raw['effect'], start=start, end=end, text=text)
         # Spatial effects have different coordinate systems. Prevent accidental stacks.
         for other in clean:
@@ -362,7 +540,7 @@ def run_video(args):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest='mode', required=True)
-    sub.add_parser('list', help='Lista os seis efeitos')
+    sub.add_parser('list', help='Lista os dezesseis efeitos')
     sub.add_parser('doctor', help='Confere dependências locais')
     for mode in ('render', 'preview'):
         s = sub.add_parser(mode)

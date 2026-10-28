@@ -7,6 +7,10 @@ import sys
 import tempfile
 import unittest
 from PIL import Image
+import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
+import effects
 
 ROOT = Path(__file__).resolve().parent.parent
 CLI = [sys.executable, str(ROOT / 'scripts/effects.py')]
@@ -44,9 +48,11 @@ class MediaIntegration(unittest.TestCase):
     def tearDown(self):
         self.assertEqual(self.original_hash, hashlib.sha256(self.source.read_bytes()).hexdigest())
 
-    def test_six_effects_export_and_keep_audio(self):
-        names = ['focus','spotlight','grade','checklist','split','headline']
-        plan = {'effects':[{'effect':name,'start':i*.5,'end':(i+1)*.5} for i,name in enumerate(names)]}
+    def test_sixteen_effects_export_and_keep_audio(self):
+        names = list(effects.EFFECTS)
+        self.assertEqual(len(names),16)
+        step=3/len(names)
+        plan = {'effects':[{'effect':name,'start':i*step,'end':(i+1)*step} for i,name in enumerate(names)]}
         f=self.dir/'plano.json';f.write_text(json.dumps(plan))
         out=self.dir/'todos.mp4'
         run(CLI+['render',str(self.source),str(out),'--plan',str(f),'--width','240'])
@@ -55,6 +61,42 @@ class MediaIntegration(unittest.TestCase):
         self.assertAlmostEqual(float(info['format']['duration']),3,delta=.06)
         self.assertEqual(audiohash(self.source),audiohash(out))
         run(['ffmpeg','-v','error','-i',str(out),'-f','null','-'])
+
+    def test_new_effects_are_visible_and_animate(self):
+        frame=np.array(Image.open(ROOT/'assets/example-frame.jpg').convert('RGB'))
+        face=effects.FaceTracker().update(frame)
+        self.assertIsNotNone(face)
+        for name in sorted(effects.EXTRA_EFFECTS):
+            with self.subTest(effect=name):
+                e=effects.validate_plan([{'effect':name,'start':0,'end':4}],4)[0]
+                first,_=effects.render_effect(frame.copy(),face.copy(),e,.1)
+                later,_=effects.render_effect(frame.copy(),face.copy(),e,2.7)
+                self.assertEqual(first.shape,frame.shape)
+                self.assertEqual(later.dtype,np.uint8)
+                self.assertGreater(float(np.abs(first.astype(float)-later.astype(float)).mean()),.001)
+                if name=='dot-reveal':
+                    self.assertTrue(np.array_equal(later,frame))
+                else:
+                    self.assertFalse(np.array_equal(later,frame))
+
+    def test_new_effects_handle_missing_face(self):
+        frame=np.zeros((426,240,3),dtype=np.uint8)
+        for name in sorted(effects.EXTRA_EFFECTS):
+            with self.subTest(effect=name):
+                e=effects.validate_plan([{'effect':name,'start':0,'end':4}],4)[0]
+                out,face=effects.render_effect(frame.copy(),None,e,1.5)
+                self.assertEqual(out.shape,frame.shape)
+                self.assertIsNone(face)
+                if name=='lean-in':
+                    self.assertTrue(np.array_equal(out,frame))
+
+    def test_text_limits_for_new_cards(self):
+        invalid=[{'effect':'stamp','text':'A'*33},
+                 {'effect':'lineup','text':'um|dois|três|quatro'},
+                 {'effect':'comment','text':'uma|duas'}]
+        for raw in invalid:
+            with self.subTest(raw=raw),self.assertRaises(ValueError):
+                effects.validate_plan([dict(raw,start=0,end=3)],3)
 
     def test_preview_writes_a_real_png(self):
         out=self.dir/'previa.png'
