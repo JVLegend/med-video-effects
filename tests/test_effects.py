@@ -133,6 +133,24 @@ class MediaIntegration(unittest.TestCase):
         out,_=effects.render_effect(changed,None,e,1.5)
         self.assertTrue(np.array_equal(out[250:400],start[250:400]))
 
+    def test_accent_recolors_brackets_and_preserves_the_face(self):
+        frame=np.array(Image.open(ROOT/'assets/example-frame.jpg').convert('RGB'))
+        face=effects.FaceTracker().update(frame)
+        plain=effects.validate_plan([dict(effect='locked-on',start=0,end=3)],3)[0]
+        themed=effects.validate_plan([dict(effect='locked-on',start=0,end=3,accent='#E2B8FF')],3)[0]
+        base,newface=effects.render_effect(frame.copy(),face.copy(),plain,1)
+        out,_=effects.render_effect(frame.copy(),face.copy(),themed,1)
+        self.assertGreater(int(np.all(out==[226,184,255],axis=2).sum()),20)
+        cx,cy,fw,fh=newface
+        x0,x1=int(cx-fw*.22),int(cx+fw*.22)
+        y0,y1=int(cy-fh*.22),int(cy+fh*.22)
+        self.assertTrue(np.array_equal(base[y0:y1,x0:x1],out[y0:y1,x0:x1]))
+        png=self.dir/'cor-personalizada.png'
+        run(CLI+['preview',str(self.source),str(png),'--effect','locked-on','--accent','#E2B8FF','--at','1','--width','240'])
+        self.assertTrue(png.is_file())
+        with self.assertRaises(ValueError):
+            effects.validate_plan([dict(effect='locked-on',accent='roxo',start=0,end=3)],3)
+
     def test_preview_writes_a_real_png(self):
         out=self.dir/'previa.png'
         run(CLI+['preview',str(self.source),str(out),'--effect','headline','--text','Informação clara|Saúde','--end','3','--at','1','--width','240'])

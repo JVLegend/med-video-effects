@@ -73,7 +73,7 @@ def render(frame,face,e,t,api):
     d.line([center,bend,tip],fill=MINT,width=stroke)
     if k>.75:
      d.rounded_rectangle((xx-nodew/2,end[1]-nodeh/2,xx+nodew/2,end[1]+nodeh/2),radius=w*.014,fill=INK,outline=MINT,width=max(1,stroke//2))
-     size=max(10,min(int(w*.033),int(nodeh*.40)));f=api.font(size)
+     size=max(10,min(int(w*.040),int(nodeh*.40)));f=api.font(size)
      rows=['']
      for word in text.split():
       candidate=(rows[-1]+' '+word).strip()
@@ -104,7 +104,7 @@ def render(frame,face,e,t,api):
   ix=left+w*.03;iy=y+hh*.15;iw=w*.07;ih=hh*.34
   d.rounded_rectangle((ix,iy,ix+iw,iy+ih),radius=w*.006,outline=(0,139,116,255),width=stroke)
   for j in range(3):d.line((ix+iw*.20,iy+ih*(.27+j*.19),ix+iw*.80,iy+ih*(.27+j*.19)),fill=(0,139,116,255),width=max(1,stroke//2))
-  f=api.fit([lines[0]],w*.66,min(int(w*.051),int(hh*.23)))
+  f=api.fit([lines[0]],w*.66,min(int(w*.060),int(hh*.23)))
   d.text((ix+iw+w*.035,y+hh*.30),lines[0],font=f,fill=(18,39,44,255),anchor='lm')
   text=lines[1] if len(lines)>1 else 'Adicione a referência'
   f=api.fit([text],w*.74,min(int(w*.038),int(hh*.18)))

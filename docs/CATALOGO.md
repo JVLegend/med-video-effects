@@ -6,7 +6,7 @@ Escolha um nome e peça à sua IA: **“Use o efeito Órbita no meu vídeo, de 3
 
 [Voltar ao início](../README.md) · [Opções avançadas](AVANCADO.md)
 
-São versões locais dos 51 estilos. Cartões usam suas imagens, quando fornecidas; sem elas, usam um frame do próprio vídeo. Os layouts são adaptados ao espaço disponível e não fazem recorte semântico da pessoa.
+São 51 efeitos locais. As prévias usam enquadramento editorial, paletas e textos de exemplo. As capas ilustrativas dos cartões acompanham o repositório; você pode usar suas próprias imagens. Os layouts respeitam o espaço disponível e não fazem recorte semântico da pessoa.
 
 | Nº | Peça por este nome | Nome técnico | O que acontece |
 |---|---|---|---|
@@ -70,31 +70,27 @@ Peça “Use Mapa de ideias com Consulta, Dúvidas, Histórico e Próximos passo
 
 ## Galeria 1
 
-![Exemplos 1 a 8](../assets/gallery-01.jpg)
+![Exemplos 1 a 9](../assets/gallery-01.jpg)
 
 ## Galeria 2
 
-![Exemplos 9 a 16](../assets/gallery-02.jpg)
+![Exemplos 10 a 18](../assets/gallery-02.jpg)
 
 ## Galeria 3
 
-![Exemplos 17 a 24](../assets/gallery-03.jpg)
+![Exemplos 19 a 27](../assets/gallery-03.jpg)
 
 ## Galeria 4
 
-![Exemplos 25 a 32](../assets/gallery-04.jpg)
+![Exemplos 28 a 36](../assets/gallery-04.jpg)
 
 ## Galeria 5
 
-![Exemplos 33 a 40](../assets/gallery-05.jpg)
+![Exemplos 37 a 45](../assets/gallery-05.jpg)
 
 ## Galeria 6
 
-![Exemplos 41 a 48](../assets/gallery-06.jpg)
-
-## Galeria 7
-
-![Exemplos 49 a 51](../assets/gallery-07.jpg)
+![Exemplos 46 a 51](../assets/gallery-06.jpg)
 
 ## Um pedido com vários efeitos
 

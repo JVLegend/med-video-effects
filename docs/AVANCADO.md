@@ -175,7 +175,7 @@ Para testar, prefira uma gravação sua sem pacientes ou informações identific
 
 A instalação isolada e os testes foram validados em macOS ARM, Python 3.14 e FFmpeg 8.1. As instruções de Linux e Windows ainda precisam de validação nesses sistemas.
 
-Os testes geram vídeos temporários para verificar exportação, preservação de áudio, proteção do original e erros de plano. As sete galerias e os 51 thumbnails são gerados pelo próprio renderizador usando o frame autorizado em `assets/`.
+Os testes geram vídeos temporários para verificar exportação, preservação de áudio, proteção do original e erros de plano. As seis galerias e os 51 thumbnails são gerados pelo próprio renderizador usando o frame autorizado em `assets/`.
 
 Quer contribuir? Abra uma issue com o efeito desejado, uma descrição do movimento e um exemplo que você possa compartilhar. Melhorias de tracking, enquadramento e instalação são bem-vindas. Se abrir um PR visual, inclua antes/depois e como testou.
 
@@ -216,3 +216,16 @@ A pausa congela o quadro do início do efeito, mantendo o áudio e o tempo do v�
 | Pulso de ideia | Uma frase curta para acompanhar a onda luminosa |
 
 Scanner e Pulso são animações gráficas: não analisam imagens, sinais biológicos ou saúde. A Lente amplia pixels existentes e não recupera detalhes. Fonte em destaque exibe o texto fornecido; não busca nem valida publicações. Conceitos e cartões usam o espaço acima do rosto, com redução ou quebra de texto para caber.
+
+## Reproduzir a direção visual das thumbnails
+
+As prévias usam um frame autorizado reenquadrado (`assets/editorial-frame.jpg`), textos curtos e paletas editoriais. Os seis desenhos em `assets/demo-cards/` são capas ilustrativas fornecidas como imagens reais para os efeitos de cartões. Você pode substituí-los pelo seu material.
+
+A cor dos grafismos pode ser alterada com `--accent` ou `accent` no plano:
+
+```sh
+.venv/bin/python scripts/effects.py render "/caminho/video.mp4" "video-lilas.mp4" \
+  --effect orbit --images "assets/demo-cards" --accent "#D9B5FF" --start 0 --end 4
+```
+
+`examples/gallery-presets.json` contém uma coleção por nome, e não um plano para executar todos de uma vez. Escolha o preset desejado e copie o objeto para a lista `effects` de um plano. Ele informa os textos, a cor e as imagens usados nas thumbnails. A cor substitui a paleta de destaque dos grafismos; os demais tratamentos (preto e branco, cor vermelha, iluminação) pertencem ao próprio efeito. A renderização preserva o material original.

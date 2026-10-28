@@ -41,7 +41,7 @@ Coloque o efeito Órbita no meu vídeo, de 4 a 7 segundos.
 
 ## Alguns exemplos
 
-![Oito efeitos aplicados ao mesmo frame autorizado](assets/preview.jpg)
+![Prévias editoriais geradas pelo renderizador](assets/preview.jpg)
 
 **Gostou de mais de um?** Peça à IA para combinar efeitos em momentos diferentes.
 
@@ -53,7 +53,7 @@ e termine com Checklist. Mostre uma prévia antes de exportar.
 <details>
 <summary>Ver exemplos animados</summary>
 
-![Demonstração de oito efeitos a partir de um frame](assets/demo.gif)
+![Demonstração dos efeitos da galeria](assets/demo.gif)
 
 </details>
 

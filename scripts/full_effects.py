@@ -207,7 +207,7 @@ def render_full(frame,face,e,t,api):
     fill=(238,246,241,245) if name=='todo' else (24,47,66,245) if name=='headline-wall' else (31,113,222,245) if name=='check-pills' else (239,244,248,245)
     x0=left+(1-k)*w*.025
     d.rounded_rectangle((x0,yy,right,yy+rh),radius=min(w*.03,rh*.3),fill=fill)
-    f=api.fit([text],w*.64,min(int(w*.040),int(rh*.45)))
+    f=api.fit([text],w*.64,min(int(w*.050),int(rh*.45)))
     cy=yy+rh/2;on=local>=.5+j*max(.3,(duration-.8)/len(lines))
     fg=WHITE if name in ('headline-wall','check-pills') else (20,36,43,255)
     d.text((left+pad,cy),text,font=f,fill=fg,anchor='lm')
@@ -238,7 +238,7 @@ def render_full(frame,face,e,t,api):
     region=Image.blend(region,Image.new('RGBA',region.size,(237,248,249,255)),.65)
     layer.alpha_composite(region,(int(xx),int(yy)));d.rounded_rectangle((xx,yy,xx+ww,yy+hh),radius=w*.015,outline=WHITE,width=max(1,w//250))
     if ww>=100:
-     f=api.fit([text],ww*.86,min(int(w*.035),int(hh*.34)));api.text_center(d,xx+ww/2,yy+hh/2,text,f,(20,37,43,255))
+     f=api.fit([text],ww*.86,min(int(w*.042),int(hh*.34)));api.text_center(d,xx+ww/2,yy+hh/2,text,f,(20,37,43,255))
   elif name=='liquid-glass-graph':
    d.rounded_rectangle((left,y,right,y+ph),radius=w*.03,fill=(22,46,55,225),outline=(165,223,221,255),width=max(1,w//200))
    f=api.fit([lines[0]],w*.72,int(w*.040));api.text_center(d,w/2,y+ph*.18,lines[0],f,WHITE)

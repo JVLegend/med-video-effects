@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import re
 import os
 from pathlib import Path
 import shutil
@@ -311,7 +312,7 @@ def render_extra(frame, face, e, t, fade):
     return np.array(Image.alpha_composite(image,layer).convert('RGB')),face
 
 
-def render_effect(frame, face, e, t):
+def _render_effect(frame, face, e, t):
     h, w = frame.shape[:2]
     local, duration = t - e['start'], e['end'] - e['start']
     fade = min(ease(local / .26), max(0., min(1., (e['end'] - t) / .24)))
@@ -378,7 +379,7 @@ def render_effect(frame, face, e, t):
         y, available = panel_layout(face, w, h, h * .22)
         if available < w * .06:
             return frame, face
-        size = min(int(w * .068), int(available / (1.5 * len(lines))))
+        size = min(int(w * .105), int(available / (1.5 * len(lines))))
         f = fit(lines, w * .80, max(12, size))
         ph = int(f.size * (1.4 * len(lines)) + w * .035)
         if ph > available:
@@ -394,7 +395,7 @@ def render_effect(frame, face, e, t):
         y, available = panel_layout(face, w, h, h * .29)
         if available < w * .14:
             return frame, face
-        f = fit(lines, w * .66, min(int(w * .049), int(available / (len(lines) * 1.9))))
+        f = fit(lines, w * .66, min(int(w * .060), int(available / (len(lines) * 1.9))))
         step = f.size * 1.9
         ph = min(available, int(step * len(lines) + w * .045))
         x0, x1 = int(w * .07), int(w * .93)
@@ -410,6 +411,23 @@ def render_effect(frame, face, e, t):
     if kind != 'split':
         layer.putalpha(layer.getchannel('A').point(lambda x: int(x * fade)))
     return np.array(Image.alpha_composite(image, layer).convert('RGB')), face
+
+
+def render_effect(frame, face, e, t):
+    out,newface=_render_effect(frame,face,e,t)
+    if not e.get('accent'):
+        return out,newface
+    target=np.array([int(e['accent'][i:i+2],16) for i in (1,3,5)],dtype=float)
+    result=out.copy()
+    # Recolor only graphic palette pixels that the effect actually changed.
+    changed=np.any(out!=frame,axis=2)
+    palette=[((94,233,193),1.),((80,230,191),1.),((0,166,133),.76),((0,146,122),.68),
+             ((0,139,116),.64),((0,177,130),.76),((0,111,94),.54)]
+    signed=out.astype(np.int16)
+    for old,scale in palette:
+        match=np.max(np.abs(signed-np.array(old,dtype=np.int16)),axis=2)<=2
+        result[match&changed]=np.uint8(np.clip(target*scale,0,255))
+    return result,newface
 
 
 def validate_plan(items, duration):
@@ -429,6 +447,11 @@ def validate_plan(items, duration):
             if len(lines)>limit or any(not line.strip() for line in lines) or len(text)>max_chars:
                 raise ValueError(f'Texto inválido para {name}: até {limit} linhas/itens e {max_chars} caracteres.')
         item=dict(effect=name,start=start,end=end,text=text)
+        if raw.get('accent'):
+            color=str(raw['accent'])
+            if not re.fullmatch(r'#[0-9a-fA-F]{6}',color):
+                raise ValueError('accent precisa ser uma cor hexadecimal, como #D8A5FF.')
+            item['accent']=color.upper()
         if raw.get('images'):
             if not isinstance(raw['images'],str):
                 raise ValueError('images deve ser um caminho local.')
@@ -467,6 +490,8 @@ def run_video(args):
             items[0]['text'] = args.text
         if args.images:
             items[0]['images'] = args.images
+        if args.accent:
+            items[0]['accent'] = args.accent
     plan = validate_plan(items, duration)
     if args.mode == 'preview' and not 0 <= args.at < duration:
         raise ValueError('--at precisa estar dentro da duração do vídeo.')
@@ -552,6 +577,7 @@ def main():
         choice.add_argument('--effect', type=resolve_effect, choices=EFFECTS); choice.add_argument('--plan')
         s.add_argument('--start', type=float, default=0); s.add_argument('--end', type=float)
         s.add_argument('--images',help='Pasta local de imagens para cartões e B-roll'); s.add_argument('--text'); s.add_argument('--width', type=int, default=1080)
+        s.add_argument('--accent',help='Cor de destaque hexadecimal, como #D8A5FF')
         s.add_argument('--font', help='Caminho de uma fonte TTF/OTF local')
         if mode == 'preview':
             s.add_argument('--at', type=float, required=True)

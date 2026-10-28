@@ -1,0 +1,374 @@
+{
+  "tags": [
+    "#Saude",
+    "#Tecnologia"
+  ],
+  "source": "assets/editorial-frame.jpg",
+  "note": "Escolha um efeito por vez; os presets não formam uma sequência.",
+  "presets": {
+    "noise": {
+      "effect": "noise",
+      "start": 0.0,
+      "end": 4,
+      "text": "CIÊNCIA|CONSULTA|CLAREZA",
+      "accent": "#D9B5FF",
+      "images": "assets/demo-cards"
+    },
+    "lineup": {
+      "effect": "lineup",
+      "start": 0.0,
+      "end": 4,
+      "text": "Ouça|Pergunte|Anote",
+      "accent": "#FFD883"
+    },
+    "locked-on": {
+      "effect": "locked-on",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#8EE7F2"
+    },
+    "orbit": {
+      "effect": "orbit",
+      "start": 0.0,
+      "end": 4,
+      "text": "Observe|Pergunte|Converse",
+      "accent": "#F4A9BB",
+      "images": "assets/demo-cards"
+    },
+    "lean-in": {
+      "effect": "lean-in",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#B8EDB0"
+    },
+    "backdrop-word": {
+      "effect": "backdrop-word",
+      "start": 0.0,
+      "end": 4,
+      "text": "CLAREZA",
+      "accent": "#FFB08A"
+    },
+    "spotlight": {
+      "effect": "spotlight",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#D9B5FF"
+    },
+    "the-bill": {
+      "effect": "the-bill",
+      "start": 0.0,
+      "end": 4,
+      "text": "PARA A CONSULTA|Suas dúvidas|Suas anotações",
+      "accent": "#FFD883"
+    },
+    "moody": {
+      "effect": "moody",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#8EE7F2"
+    },
+    "swipe": {
+      "effect": "swipe",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#F4A9BB"
+    },
+    "todo": {
+      "effect": "todo",
+      "start": 0.0,
+      "end": 4,
+      "text": "Boa pergunta|Escuta atenta|Próximo passo",
+      "accent": "#B8EDB0"
+    },
+    "comment-box": {
+      "effect": "comment-box",
+      "start": 0.0,
+      "end": 4,
+      "text": "Qual é sua dúvida?",
+      "accent": "#FFB08A"
+    },
+    "tap": {
+      "effect": "tap",
+      "start": 0.0,
+      "end": 4,
+      "text": "Acompanhar|Acompanhando",
+      "accent": "#D9B5FF"
+    },
+    "pause-point": {
+      "effect": "pause-point",
+      "start": 0.0,
+      "end": 4,
+      "text": "Guarde esta ideia.",
+      "accent": "#FFD883"
+    },
+    "uninstall": {
+      "effect": "uninstall",
+      "start": 0.0,
+      "end": 4,
+      "text": "MENOS RUÍDO.",
+      "accent": "#8EE7F2"
+    },
+    "reel-frame": {
+      "effect": "reel-frame",
+      "start": 0.0,
+      "end": 4,
+      "text": "UMA BOA CONVERSA",
+      "accent": "#F4A9BB"
+    },
+    "shortcut-rain": {
+      "effect": "shortcut-rain",
+      "start": 0.0,
+      "end": 4,
+      "text": "Ctrl|C|V|Tab|Shift",
+      "accent": "#B8EDB0"
+    },
+    "reject-stamp": {
+      "effect": "reject-stamp",
+      "start": 0.0,
+      "end": 4,
+      "text": "ANOTE ISSO",
+      "accent": "#FFB08A"
+    },
+    "countdown-flip": {
+      "effect": "countdown-flip",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#D9B5FF"
+    },
+    "rabbit-hole": {
+      "effect": "rabbit-hole",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#FFD883"
+    },
+    "cover-star": {
+      "effect": "cover-star",
+      "start": 0.0,
+      "end": 4,
+      "text": "OLHAR|Uma ideia muda a conversa",
+      "accent": "#8EE7F2"
+    },
+    "scribble": {
+      "effect": "scribble",
+      "start": 0.0,
+      "end": 4,
+      "text": "Pense nisso.",
+      "accent": "#F4A9BB"
+    },
+    "glass-widgets": {
+      "effect": "glass-widgets",
+      "start": 0.0,
+      "end": 4,
+      "text": "CLAREZA|ESCUTA|PRÓXIMO PASSO",
+      "accent": "#B8EDB0"
+    },
+    "red-collage": {
+      "effect": "red-collage",
+      "start": 0.0,
+      "end": 4,
+      "text": "CLAREZA|Boa informação.|Boa conversa.",
+      "accent": "#FFB08A"
+    },
+    "split-headline": {
+      "effect": "split-headline",
+      "start": 0.0,
+      "end": 4,
+      "text": "Informação boa.|Conversa melhor.",
+      "accent": "#D9B5FF"
+    },
+    "pastel-word": {
+      "effect": "pastel-word",
+      "start": 0.0,
+      "end": 4,
+      "text": "CUIDADO|Começa com uma conversa.",
+      "accent": "#FFD883"
+    },
+    "check-pills": {
+      "effect": "check-pills",
+      "start": 0.0,
+      "end": 4,
+      "text": "Observe|Pergunte|Converse",
+      "accent": "#8EE7F2"
+    },
+    "timeline": {
+      "effect": "timeline",
+      "start": 0.0,
+      "end": 4,
+      "text": "UMA IDEIA DE CADA VEZ",
+      "accent": "#F4A9BB"
+    },
+    "headline-box": {
+      "effect": "headline-box",
+      "start": 0.0,
+      "end": 4,
+      "text": "LEVE SUAS|DÚVIDAS.",
+      "accent": "#B8EDB0"
+    },
+    "profile-wall": {
+      "effect": "profile-wall",
+      "start": 0.0,
+      "end": 4,
+      "text": "SUAS IDEIAS",
+      "accent": "#FFB08A",
+      "images": "assets/demo-cards"
+    },
+    "tier-list": {
+      "effect": "tier-list",
+      "start": 0.0,
+      "end": 4,
+      "text": "PRIORIDADES|Boa pergunta",
+      "accent": "#D9B5FF"
+    },
+    "broll-split": {
+      "effect": "broll-split",
+      "start": 0.0,
+      "end": 4,
+      "text": "MAIS CONTEXTO",
+      "accent": "#FFD883",
+      "images": "assets/demo-cards"
+    },
+    "phone-fan": {
+      "effect": "phone-fan",
+      "start": 0.0,
+      "end": 4,
+      "text": "Vídeos para explicar",
+      "accent": "#8EE7F2",
+      "images": "assets/demo-cards"
+    },
+    "dot-reveal": {
+      "effect": "dot-reveal",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#F4A9BB"
+    },
+    "headline-wall": {
+      "effect": "headline-wall",
+      "start": 0.0,
+      "end": 4,
+      "text": "OUÇA MAIS.|PERGUNTE MAIS.|ENTENDA MELHOR.",
+      "accent": "#B8EDB0"
+    },
+    "checklist": {
+      "effect": "checklist",
+      "start": 0.0,
+      "end": 4,
+      "text": "Observe|Pergunte|Anote",
+      "accent": "#FFB08A"
+    },
+    "liquid-glass-graph": {
+      "effect": "liquid-glass-graph",
+      "start": 0.0,
+      "end": 4,
+      "text": "ENTENDA A IDEIA",
+      "accent": "#D9B5FF"
+    },
+    "carousel-spin": {
+      "effect": "carousel-spin",
+      "start": 0.0,
+      "end": 4,
+      "text": "Observe|Pergunte|Converse",
+      "accent": "#FFD883",
+      "images": "assets/demo-cards"
+    },
+    "match-cut": {
+      "effect": "match-cut",
+      "start": 0.0,
+      "end": 4,
+      "text": "CIÊNCIA",
+      "accent": "#8EE7F2"
+    },
+    "apple-toggles": {
+      "effect": "apple-toggles",
+      "start": 0.0,
+      "end": 4,
+      "text": "Clareza|Contexto|Escuta",
+      "accent": "#F4A9BB"
+    },
+    "led-sign": {
+      "effect": "led-sign",
+      "start": 0.0,
+      "end": 4,
+      "text": "BOA|PERGUNTA.",
+      "accent": "#B8EDB0"
+    },
+    "slow-push": {
+      "effect": "slow-push",
+      "start": 0.0,
+      "end": 4,
+      "text": "",
+      "accent": "#FFB08A"
+    },
+    "over-the-shoulder-zoom": {
+      "effect": "over-the-shoulder-zoom",
+      "start": 0.0,
+      "end": 4,
+      "text": "MAIS CONTEXTO|MAIS CLAREZA",
+      "accent": "#D9B5FF"
+    },
+    "messages": {
+      "effect": "messages",
+      "start": 0.0,
+      "end": 4,
+      "text": "Uma dúvida?|Vamos conversar.|Anote para a consulta.",
+      "accent": "#FFD883"
+    },
+    "place-in-grid": {
+      "effect": "place-in-grid",
+      "start": 0.0,
+      "end": 4,
+      "text": "SUAS IDEIAS",
+      "accent": "#8EE7F2",
+      "images": "assets/demo-cards"
+    },
+    "idea-scan": {
+      "effect": "idea-scan",
+      "start": 0.0,
+      "end": 4,
+      "text": "O QUE IMPORTA.",
+      "accent": "#F4A9BB"
+    },
+    "focus-lens": {
+      "effect": "focus-lens",
+      "start": 0.0,
+      "end": 4,
+      "text": "OLHE DE PERTO.",
+      "accent": "#B8EDB0"
+    },
+    "concept-map": {
+      "effect": "concept-map",
+      "start": 0.0,
+      "end": 4,
+      "text": "CONSULTA|Ouvir|Perguntar|Anotar",
+      "accent": "#FFB08A"
+    },
+    "question-flip": {
+      "effect": "question-flip",
+      "start": 0.0,
+      "end": 4,
+      "text": "Por onde começar?|Por uma boa pergunta.",
+      "accent": "#D9B5FF"
+    },
+    "source-pin": {
+      "effect": "source-pin",
+      "start": 0.0,
+      "end": 4,
+      "text": "FONTES IMPORTAM.|Sua referência aqui",
+      "accent": "#FFD883"
+    },
+    "idea-pulse": {
+      "effect": "idea-pulse",
+      "start": 0.0,
+      "end": 4,
+      "text": "UMA IDEIA POR VEZ.",
+      "accent": "#8EE7F2"
+    }
+  }
+}
